@@ -1,0 +1,35 @@
+.wrapper {
+  width: 100%;
+  padding: 8px 6px;
+  transition: 0.25s;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  .image_user {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  .image_user img {
+    width: 100%;
+    height: 100%;
+  }
+  .infor_user {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .infor_user p {
+    font-weight: 700;
+  }
+  .infor_user span {
+    font-size: 14px;
+    color: #9e9c9c;
+  }
+}
+.wrapper:hover {
+  background-color: #f2f3f4;
+}

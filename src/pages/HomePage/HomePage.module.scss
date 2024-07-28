@@ -1,0 +1,15 @@
+.wrapper .container {
+  width: 60%;
+  transform: translateX(20%);
+  display: flex;
+  align-items: flex-start;
+}
+.container_sideBar {
+  width: 30%;
+  background-color: #f2f3f4;
+}
+.home_page {
+  width: 70%;
+  height: 100vh;
+  background-color: #f2f3f4;
+}

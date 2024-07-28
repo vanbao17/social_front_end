@@ -1,0 +1,33 @@
+.wrapper {
+  width: 100%;
+  height: 90vh;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  .title {
+    font-size: 22px;
+    margin-bottom: 15px;
+  }
+  .filter {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .filter .item_filter {
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 15px;
+  }
+  .filter .item_filter.active {
+    background-color: #dfe9f2;
+    color: #3f81fe;
+    font-weight: 600;
+  }
+  .list_notification {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+  }
+}
