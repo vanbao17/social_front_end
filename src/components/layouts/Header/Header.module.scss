@@ -6,6 +6,7 @@
   background-color: #fff;
   padding: 12px 24px;
   box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.12), 0 -4px 8px 0 rgba(0, 0, 0, 0.01);
+
   .logo {
     width: 30%;
     font-size: 24px;
@@ -77,6 +78,7 @@
 }
 .icon {
   fill: #7b7a7a;
+  color: #7b7a7a;
 }
 .actions_user {
   width: 100%;
@@ -93,4 +95,9 @@
   .item_action:hover {
     background-color: #f2f3f4;
   }
+}
+.wrapper.fixed {
+  position: fixed;
+  top: 0;
+  z-index: 99;
 }

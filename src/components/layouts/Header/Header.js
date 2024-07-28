@@ -9,13 +9,18 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleInfo,
+  faFile,
   faRightFromBracket,
+  faUser,
+  faUserGroup,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Notifications from "../../Notifications/Notifications";
 import Messages from "../../Messages/Messages";
+import { Context } from "../../../contexts/Context";
 const cx = classnames.bind(styles);
 function Header() {
+  const { menufix } = useContext(Context);
   const [state, seState] = useState();
   const handleChangeState = (string) => {
     if (string == state) {
@@ -25,7 +30,7 @@ function Header() {
     }
   };
   return (
-    <div className={cx("wrapper")}>
+    <div className={cx("wrapper", menufix == true ? "fixed" : "")}>
       <div className={cx("logo")}>
         <span>PVB</span>
       </div>
@@ -34,7 +39,25 @@ function Header() {
           <HomeIcon className={cx("icon")} />
         </div>
         <div className={cx("container_icon")}>
-          <PersonalIcon className={cx("icon")} />
+          <FontAwesomeIcon
+            style={{ width: "24px", height: "24px" }}
+            icon={faUser}
+            className={cx("icon")}
+          />
+        </div>
+        <div className={cx("container_icon")}>
+          <FontAwesomeIcon
+            style={{ width: "24px", height: "24px" }}
+            icon={faFile}
+            className={cx("icon")}
+          />
+        </div>
+        <div className={cx("container_icon")}>
+          <FontAwesomeIcon
+            style={{ width: "24px", height: "24px" }}
+            icon={faUserGroup}
+            className={cx("icon")}
+          />
         </div>
       </div>
       <div className={cx("actions")}>
