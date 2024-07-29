@@ -1,0 +1,355 @@
+@media (min-width: "1250px") {
+  .wrapper {
+    width: 100%;
+    .container_wall_personal {
+      width: 100%;
+      background-color: #fff;
+      box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.12),
+        0 -4px 8px 0 rgba(0, 0, 0, 0.01);
+    }
+    .wall,
+    .sidebar_posts {
+      width: 73%;
+      margin: 0px auto;
+    }
+  }
+  .infor_user {
+    width: 100%;
+    .banner {
+      width: 100%;
+    }
+    .banner img {
+      width: 100%;
+      height: 50vh;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .infor {
+      padding: 0px 24px;
+      margin: -5% 0px 0px 0px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .infor .infor_left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .infor_left .image_user {
+      border-radius: 50%;
+      overflow: hidden;
+      border: 8px solid #fff;
+    }
+    .infor_left .name_friends {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .infor_left .name_friends h2 {
+      font-size: 30px;
+    }
+    .infor_left .name_friends span {
+      font-weight: 600;
+      color: #918f8f;
+    }
+    .infor_right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+    }
+    .container_action_other {
+      position: relative;
+    }
+    .infor_right .update_infor {
+      padding: 6px 12px;
+      background-color: #e5e5e5;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.25s;
+    }
+    .update_infor:hover {
+      background-color: #f2f3f4;
+    }
+    .container_action_other .list_option {
+      padding: 12px;
+    }
+    .container_action_other .list_option li a {
+      display: block;
+      border-radius: 5px;
+      padding: 6px 12px;
+      transition: 0.25s;
+    }
+    .container_action_other .list_option li:hover a {
+      background-color: #f2f3f4;
+    }
+  }
+  .sidebar_posts {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+
+    .container_sidebar {
+      width: 40%;
+      background-color: #fff;
+      border-radius: 5px;
+      margin-top: 5px;
+      position: sticky;
+      top: 73px;
+    }
+    .manager_post {
+      padding: 24px;
+      background-color: #fff;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .manager_button {
+      padding: 6px 12px;
+      background-color: #f2f3f4;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .posts {
+      width: 60%;
+      margin-top: 5px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .container_input_post {
+      width: 100%;
+      padding: 12px;
+      background-color: #fff;
+      border-radius: 10px;
+    }
+    .container_input_post h3 {
+      margin-bottom: 12px;
+    }
+    .container_input_post > div {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .image_user {
+      width: 40px;
+      height: 40px;
+    }
+    .image_user img {
+      width: 40px;
+      height: 40px;
+      overflow: hidden;
+      border-radius: 50%;
+    }
+    .container_input {
+      width: 100%;
+      background-color: #f2f3f4;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    .container_input:hover {
+      background-color: #ebebeb;
+    }
+    .container_input p {
+      width: 100%;
+      background-color: transparent;
+      padding: 12px;
+      color: #aaa;
+    }
+    .list_post {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+}
+@media (max-width: "670px") {
+  .wrapper {
+    width: 100%;
+    .container_wall_personal {
+      width: 100%;
+      background-color: #fff;
+      box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.12),
+        0 -4px 8px 0 rgba(0, 0, 0, 0.01);
+    }
+    .wall,
+    .sidebar_posts {
+      width: 100%;
+      margin: 0px auto;
+    }
+  }
+  .infor_user {
+    width: 100%;
+    padding-bottom: 24px;
+    margin-bottom: 10px;
+    .banner {
+      width: 100%;
+    }
+    .banner img {
+      width: 100%;
+      height: 30vh;
+      object-fit: cover;
+    }
+    .infor {
+      padding: 0px 24px;
+      margin: -30% 0px 0px 0px;
+      display: flex;
+      flex-direction: column;
+    }
+    .infor .infor_left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    .infor_left .image_user {
+      border-radius: 50%;
+      overflow: hidden;
+      border: 8px solid #fff;
+    }
+    .infor_left .name_friends {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .infor_left .name_friends h2 {
+      font-size: 30px;
+    }
+    .infor_left .name_friends span {
+      font-weight: 600;
+      color: #918f8f;
+    }
+    .infor_right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 14px;
+    }
+    .container_action_other {
+      position: relative;
+    }
+    .infor_right .update_infor {
+      padding: 6px 12px;
+      background-color: #e5e5e5;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.25s;
+    }
+    .update_infor:hover {
+      background-color: #f2f3f4;
+    }
+    .container_action_other .list_option {
+      padding: 12px;
+    }
+    .container_action_other .list_option li a {
+      display: block;
+      border-radius: 5px;
+      padding: 6px 12px;
+      transition: 0.25s;
+    }
+    .container_action_other .list_option li:hover a {
+      background-color: #f2f3f4;
+    }
+  }
+  .sidebar_posts {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .container_sidebar {
+      width: 95%;
+      background-color: #fff;
+      border-radius: 5px;
+      margin: 0px auto;
+    }
+    .manager_post {
+      padding: 24px;
+      background-color: #fff;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .manager_button {
+      padding: 6px 12px;
+      background-color: #f2f3f4;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .posts {
+      width: 95%;
+      margin: 0px auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .container_input_post {
+      width: 100%;
+      padding: 12px;
+      background-color: #fff;
+      border-radius: 10px;
+    }
+    .container_input_post h3 {
+      margin-bottom: 12px;
+    }
+    .container_input_post > div {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .image_user {
+      width: 40px;
+      height: 40px;
+    }
+    .image_user img {
+      width: 40px;
+      height: 40px;
+      overflow: hidden;
+      border-radius: 50%;
+    }
+    .container_input {
+      width: 100%;
+      background-color: #f2f3f4;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    .container_input:hover {
+      background-color: #ebebeb;
+    }
+    .container_input p {
+      width: 100%;
+      background-color: transparent;
+      padding: 12px;
+      color: #aaa;
+    }
+    .list_post {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+}
+.icon_chervon {
+  z-index: 0;
+}

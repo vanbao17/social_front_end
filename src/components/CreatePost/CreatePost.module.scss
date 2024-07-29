@@ -1,0 +1,112 @@
+.wrapper {
+  width: 100%;
+  // box-shadow: 0 -4px 16px 0 rgba(0, 0, 0, 0.1), 0 8px 16px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+}
+.title {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 12px;
+  .close {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.25s;
+  }
+  .close:hover {
+    background-color: #e5e5e5;
+  }
+}
+.container_content {
+  width: 100%;
+  padding: 12px;
+  .infor_user {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  img {
+    border-radius: 50%;
+    margin-right: 12px;
+  }
+  .name_user {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 14px;
+  }
+  .name_user p {
+    font-weight: 600;
+  }
+  .name_user .state_post {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 8px;
+    border-radius: 5px;
+    background-color: #e5e5e5;
+    cursor: pointer;
+  }
+}
+.container_dragfile {
+  height: 150px;
+  margin-bottom: 12px;
+}
+.action_for_post {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border: 1px solid #e5e5e5;
+  padding: 12px;
+  border-radius: 5px;
+  .actions {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .actions.active {
+    background-color: #f2f3f4;
+  }
+}
+.public {
+  width: 100%;
+  margin-top: 24px;
+  button {
+    width: 100%;
+    padding: 10px 12px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    background-color: #3f81fe;
+    color: #fff;
+    transition: 0.25s;
+  }
+  button:hover {
+    opacity: 0.8;
+  }
+  button.disable {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #a9abac;
+  }
+  button span {
+    font-size: 14px;
+    font-weight: 600;
+  }
+}

@@ -1,71 +1,138 @@
-.wrapper .container {
-  width: 60%;
-  transform: translateX(20%);
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  margin-top: 5px;
-}
-.container_sideBar {
-  width: 30%;
-  background-color: #fff;
-  // box-shadow: 0 -4px 16px 0 rgba(0, 0, 0, 0.1), 0 8px 16px 0 rgba(0, 0, 0, 0.1);
-  // border: 1px solid #e2e2e7;
-  border-radius: 10px;
-
-  position: sticky;
-  top: 74px;
-}
-.home_page {
-  width: 70%;
-  // height: 100vh;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  .container_input_post {
-    width: 100%;
-    padding: 12px;
-    background-color: #fff;
-    border-radius: 10px;
-  }
-  .container_input_post h3 {
-    margin-bottom: 12px;
-  }
-  .container_input_post > div {
-    width: 100%;
+@media (min-width: "1250px") {
+  .wrapper .container {
+    width: 60%;
+    transform: translateX(20%);
     display: flex;
-    align-items: center;
-    gap: 20px;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 5px;
   }
-  .image_user {
-    width: 40px;
-    height: 40px;
+  .container_sideBar {
+    width: 30%;
+    background-color: #fff;
+    // border: 1px solid #e2e2e7;
+    border-radius: 10px;
+
+    position: sticky;
+    top: 74px;
   }
-  .image_user img {
-    width: 40px;
-    height: 40px;
-    overflow: hidden;
-    border-radius: 50%;
-  }
-  .container_input {
-    width: 100%;
-    background-color: #f2f3f4;
-    border-radius: 20px;
-    cursor: pointer;
-  }
-  .container_input:hover {
-    background-color: #ebebeb;
-  }
-  .container_input p {
-    width: 100%;
-    background-color: transparent;
-    padding: 12px;
-    color: #aaa;
-  }
-  .list_post {
-    width: 100%;
+  .home_page {
+    width: 70%;
+    // height: 100vh;
     display: flex;
     flex-direction: column;
+    gap: 15px;
+    .container_input_post {
+      width: 100%;
+      padding: 12px;
+      background-color: #fff;
+      border-radius: 10px;
+    }
+    .container_input_post h3 {
+      margin-bottom: 12px;
+    }
+    .container_input_post > div {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .image_user {
+      width: 40px;
+      height: 40px;
+    }
+    .image_user img {
+      width: 40px;
+      height: 40px;
+      overflow: hidden;
+      border-radius: 50%;
+    }
+    .container_input {
+      width: 100%;
+      background-color: #f2f3f4;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    .container_input:hover {
+      background-color: #ebebeb;
+    }
+    .container_input p {
+      width: 100%;
+      background-color: transparent;
+      padding: 12px;
+      color: #aaa;
+    }
+    .list_post {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+}
+@media (max-width: "670px") {
+  .wrapper .container {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
     gap: 10px;
+    margin-top: 5px;
+  }
+  .container_sideBar {
+    display: none;
+  }
+  .home_page {
+    width: 95%;
+    // height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    .container_input_post {
+      width: 100%;
+      padding: 12px;
+      background-color: #fff;
+      border-radius: 10px;
+    }
+    .container_input_post h3 {
+      margin-bottom: 12px;
+    }
+    .container_input_post > div {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .image_user {
+      width: 40px;
+      height: 40px;
+    }
+    .image_user img {
+      width: 40px;
+      height: 40px;
+      overflow: hidden;
+      border-radius: 50%;
+    }
+    .container_input {
+      width: 100%;
+      background-color: #f2f3f4;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    .container_input:hover {
+      background-color: #ebebeb;
+    }
+    .container_input p {
+      width: 100%;
+      background-color: transparent;
+      padding: 12px;
+      color: #aaa;
+    }
+    .list_post {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
   }
 }

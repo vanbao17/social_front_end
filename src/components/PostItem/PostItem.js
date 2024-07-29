@@ -6,18 +6,17 @@ import {
   faBug,
   faComment,
   faEllipsisV,
-  faImage,
-  faPaperclip,
-  faPaperPlane,
+  faPen,
   faThumbsUp,
-  faVideo,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import { useRef, useState } from "react";
+import { useState } from "react";
+import Comments from "../Comments/Comments";
+import CommentInput from "../CommentInput/CommentInput";
 const cx = classnames.bind(styles);
-function PostItem() {
+function PostItem({ fixedComment, handleComment }) {
   const [stateAction, setStateAction] = useState(false);
-  const [stateInputCommment, setStateInputCommment] = useState(false);
-  const inputFileRef = useRef();
+  const [stateLike, setStateLike] = useState(false);
   const [limitText, setLimitText] = useState(100);
   const contentPost = `👋 Tình hình là mình vừa đi THI MÁY TOEIC ở IIG về và được 720đ. Một số lời khuyên cho các b chưa thi này:
 - Không cần đi học cả năm trời đâu, thi TOEIC không khó đến mức đó. Tập trung ôn tầm 2 3 tháng là ổn rồi. Còn ôn ở đâu cho sát nhất thì chỉ có chương trình học của ETS (đơn vị ra đề thi TOEIC) này nhé: https://s.iigvietnam.com/tailieuToeicIIG
@@ -37,8 +36,77 @@ Chúc các bạn, các em thi tốt! Còn ai muốn tìm hiểu kĩ hơn về qu
       setLimitText(100);
     }
   };
+  const comments = [
+    {
+      id: 1,
+      text: "This is a comment",
+      author: "User A",
+      level: 0,
+      replies: [
+        {
+          id: 2,
+          text: "This is a reply A",
+          author: "User B",
+          level: 1,
+          replies: [
+            {
+              id: 3,
+              text: "This is a reply C",
+              author: "User C",
+              level: 2,
+              replies: [],
+            },
+            {
+              id: 4,
+              text: "This is a reply D",
+              author: "User D",
+              level: 2,
+              replies: [],
+            },
+          ],
+        },
+        {
+          id: 9,
+          text: "This is a reply A",
+          author: "User Baor",
+          level: 1,
+          replies: [],
+        },
+      ],
+    },
+    {
+      id: 5,
+      text: "This is a Comment E",
+      author: "User E",
+      level: 0,
+      replies: [
+        {
+          id: 6,
+          text: "This is a reply F",
+          author: "User F",
+          replies: [],
+          level: 1,
+        },
+      ],
+    },
+    {
+      id: 7,
+      text: "This is a Comment G",
+      author: "User G",
+      level: 0,
+      replies: [
+        {
+          id: 8,
+          text: "This is a reply H",
+          author: "User H",
+          level: 1,
+          replies: [],
+        },
+      ],
+    },
+  ];
   return (
-    <div className={cx("wrapper")}>
+    <div className={cx("wrapper", fixedComment == true ? "fixed" : "")}>
       <div className={cx("title_post")}>
         <div className={cx("infor")}>
           <div className={cx("image_user")}>
@@ -68,6 +136,14 @@ Chúc các bạn, các em thi tốt! Còn ai muốn tìm hiểu kĩ hơn về qu
                 <FontAwesomeIcon icon={faBookmark} />
                 <span>Lưu bài viết</span>
               </li>
+              <li>
+                <FontAwesomeIcon icon={faPen} />
+                <span>Chỉnh sửa bài viết</span>
+              </li>
+              <li>
+                <FontAwesomeIcon icon={faTrash} />
+                <span>Xóa bài viết</span>
+              </li>
             </ul>
           ) : (
             <></>
@@ -90,52 +166,35 @@ Chúc các bạn, các em thi tốt! Còn ai muốn tìm hiểu kĩ hơn về qu
           <span>1k2 lượt bình luận</span>
         </div>
         <div className={cx("action_post")}>
-          <div className={cx("like")}>
+          <div
+            className={cx("like", stateLike == true ? "active" : "")}
+            onClick={() => {
+              setStateLike(!stateLike);
+            }}
+          >
             <FontAwesomeIcon icon={faThumbsUp} />
             <span>Thích</span>
           </div>
-          <div className={cx("comment")}>
+          <div
+            className={cx("comment")}
+            onClick={() => {
+              handleComment(null);
+            }}
+          >
             <FontAwesomeIcon icon={faComment} />
             <span>Bình luận</span>
           </div>
         </div>
-
-        <div className={cx("comment")}>
-          <div className={cx("container_input_post")}>
-            <div>
-              <div className={cx("image_user")}>
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfJ8PF2KNdZi2TxASyVX8vpYf4rk9iCo3NFg&s"></img>
-              </div>
-              <div className={cx("container_input")}>
-                <div>
-                  <input
-                    onFocus={() => {
-                      setStateInputCommment(true);
-                    }}
-                    placeholder="Bạn đang nghĩ gì ?"
-                    type="text"
-                  ></input>
-                  <div className={cx("icon_send_comment")}>
-                    <FontAwesomeIcon icon={faPaperPlane} />
-                  </div>
-                </div>
-                {stateInputCommment == true ? (
-                  <div className={cx("action_comment")}>
-                    <input ref={inputFileRef} type="file" hidden />
-                    <FontAwesomeIcon
-                      icon={faPaperclip}
-                      onClick={() => {
-                        inputFileRef.current.click();
-                      }}
-                      className={cx("icon_action")}
-                    />
-                  </div>
-                ) : (
-                  <></>
-                )}
-              </div>
-            </div>
-          </div>
+        <div className={cx("container_comment")}>
+          <Comments comments={comments} />
+        </div>
+        <div
+          className={cx(
+            "container_comment_input",
+            fixedComment == true ? "fixed" : ""
+          )}
+        >
+          <CommentInput fixedComment={fixedComment} />
         </div>
       </div>
     </div>
