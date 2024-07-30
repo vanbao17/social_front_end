@@ -1,7 +1,9 @@
 import LayoutEmpty from "../components/layouts/LayoutEmpty/LayoutEmpty";
 import configs from "../configs/configs";
+import FriendPage from "../pages/FriendPage/FriendPage";
 import HomePage from "../pages/HomePage/HomePage";
 import Login from "../pages/Login/Login";
+import Messenger from "../pages/Messenger/Messenger";
 import PersonalPage from "../pages/PersonalPage/PersonalPage";
 const publicRoute = [
   {
@@ -16,6 +18,14 @@ const publicRoute = [
   {
     path: configs.PersonalPage,
     component: PersonalPage,
+  },
+  {
+    path: configs.Friends,
+    component: FriendPage,
+  },
+  {
+    path: configs.Messenger,
+    component: Messenger,
   },
 ];
 export default publicRoute;

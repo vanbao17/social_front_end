@@ -117,35 +117,43 @@ function Header() {
         </div>
       </div>
       <div className={cx("navigates_phone")}>
-        <div className={cx("container_icon")}>
-          <HomeIcon className={cx("icon")} />
-        </div>
-        <div className={cx("container_icon")}>
-          <a href="#">
+        <a href="/">
+          <div className={cx("container_icon")}>
+            <HomeIcon className={cx("icon")} />
+          </div>
+        </a>
+        <a href="/sdsdsdss">
+          <div className={cx("container_icon")}>
             <FontAwesomeIcon
               style={{ width: "24px", height: "24px" }}
               icon={faUser}
               className={cx("icon")}
             />
-          </a>
-        </div>
-        <div className={cx("container_icon")}>
-          <FontAwesomeIcon
-            style={{ width: "24px", height: "24px" }}
-            icon={faFile}
-            className={cx("icon")}
-          />
-        </div>
-        <div className={cx("container_icon")}>
-          <FontAwesomeIcon
-            style={{ width: "24px", height: "24px" }}
-            icon={faUserGroup}
-            className={cx("icon")}
-          />
-        </div>
-        <div className={cx("container_icon")}>
-          <MessIcon className={cx("icon")} />
-        </div>
+          </div>
+        </a>
+        <a href="/files">
+          <div className={cx("container_icon")}>
+            <FontAwesomeIcon
+              style={{ width: "24px", height: "24px" }}
+              icon={faFile}
+              className={cx("icon")}
+            />
+          </div>
+        </a>
+        <a href="/friends">
+          <div className={cx("container_icon")}>
+            <FontAwesomeIcon
+              style={{ width: "24px", height: "24px" }}
+              icon={faUserGroup}
+              className={cx("icon")}
+            />
+          </div>
+        </a>
+        <a href="/messenger">
+          <div className={cx("container_icon")}>
+            <MessIcon className={cx("icon")} />
+          </div>
+        </a>
         <div className={cx("container_icon")}>
           <NotificationIcon className={cx("icon")} />
         </div>

@@ -1,0 +1,294 @@
+@media (min-width: "1250px") {
+  .wrapper {
+    width: 100%;
+    background-color: #fff;
+    display: flex;
+    align-items: flex-start;
+    height: calc(100vh - 70px);
+    border-top: 1px solid #aaa;
+  }
+  .list_convensation,
+  .infor_receiver {
+    width: 25%;
+    height: 100%;
+  }
+  .container_chat {
+    width: 50%;
+  }
+  .list_convensation {
+    border-right: 1px solid #aaa;
+    h3 {
+      padding: 12px;
+      font-size: 22px;
+    }
+    .search_chat {
+      width: 100%;
+      padding-left: 12px;
+      padding-right: 12px;
+      margin-bottom: 12px;
+    }
+    .container_search {
+      width: 100%;
+      display: flex;
+      padding: 0px 6px;
+      align-items: center;
+      background-color: #f2f3f4;
+      border-radius: 20px;
+    }
+    .container_search input {
+      width: 100%;
+      padding: 6px;
+      border: none;
+      outline: none;
+      background-color: transparent;
+    }
+    .list {
+      width: 100%;
+      height: calc(100% - 90px);
+      overflow-y: scroll;
+    }
+  }
+  .container_chat {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    .title_chat {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      gap: 10px;
+      border-bottom: 1px solid #aaa;
+    }
+    .title_chat img {
+      width: 40px;
+      height: 40px;
+      overflow: hidden;
+      border-radius: 50%;
+    }
+    .title_chat span {
+      font-weight: 600;
+    }
+    .content_chat {
+      height: 100%;
+      padding: 12px;
+      overflow-y: scroll;
+    }
+    .container_mess_item {
+      width: 100%;
+    }
+    .mess_item {
+      width: fit-content;
+      padding: 6px 12px;
+      border-radius: 20px;
+      background-color: #cacaca;
+    }
+    .container_mess_item.sender .mess_item {
+      background-color: #3f81fe;
+      color: #fff;
+    }
+    .container_mess_item.sender {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+    }
+  }
+  .input_chat {
+    border-top: 1px solid #aaa;
+  }
+  .input_chat .container_input {
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .input_chat .container_input input {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    background-color: #cacaca;
+  }
+  .input_chat .container_input .icon {
+    cursor: pointer;
+  }
+  .infor_receiver {
+    border-left: 1px solid #aaa;
+  }
+  .infor_receiver .infor {
+    height: 50%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .infor_receiver .infor img {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-bottom: 12px;
+  }
+  .infor_receiver .infor .name {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 24px;
+  }
+  .infor_receiver .infor .actions {
+    display: flex;
+    align-items: center;
+  }
+  .infor_receiver .infor .actions .item_action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .infor_receiver .infor .actions .item_action span {
+    font-size: 14px;
+  }
+  .infor_receiver .infor .actions .item_action .icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #aaa;
+    cursor: pointer;
+    margin-bottom: 4px;
+  }
+}
+@media (max-width: "670px") {
+  .wrapper {
+    width: 100%;
+    background-color: #fff;
+    display: flex;
+    align-items: flex-start;
+    height: calc(100vh - 70px);
+    border-top: 1px solid #aaa;
+  }
+  .infor_receiver {
+    display: none;
+  }
+  .container_chat {
+    width: 100%;
+  }
+  .action_title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .action_title .icon {
+    padding: 12px;
+    font-size: 24px;
+  }
+  .list_convensation.fixed {
+    left: 0;
+  }
+  .list_convensation {
+    width: 80%;
+    background-color: #fff;
+    z-index: 99;
+    left: -100%;
+    transition: 0.25s;
+    border-right: 1px solid #aaa;
+    position: fixed;
+    h3 {
+      padding: 12px;
+      font-size: 22px;
+    }
+    .search_chat {
+      width: 100%;
+      padding-left: 12px;
+      padding-right: 12px;
+      margin-bottom: 12px;
+    }
+    .container_search {
+      width: 100%;
+      display: flex;
+      padding: 0px 6px;
+      align-items: center;
+      background-color: #f2f3f4;
+      border-radius: 20px;
+    }
+    .container_search input {
+      width: 100%;
+      padding: 6px;
+      border: none;
+      outline: none;
+      background-color: transparent;
+    }
+    .list {
+      width: 100%;
+      height: calc(100vh - 200px);
+      overflow-y: scroll;
+    }
+  }
+  .container_chat {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    .title_chat {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      gap: 10px;
+      border-bottom: 1px solid #aaa;
+    }
+    .title_chat img {
+      width: 40px;
+      height: 40px;
+      overflow: hidden;
+      border-radius: 50%;
+    }
+    .title_chat span {
+      font-weight: 600;
+    }
+    .content_chat {
+      height: 100%;
+      padding: 12px;
+      overflow-y: scroll;
+    }
+    .container_mess_item {
+      width: 100%;
+    }
+    .mess_item {
+      width: fit-content;
+      padding: 6px 12px;
+      border-radius: 20px;
+      background-color: #cacaca;
+    }
+    .container_mess_item.sender .mess_item {
+      background-color: #3f81fe;
+      color: #fff;
+    }
+    .container_mess_item.sender {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+    }
+  }
+  .input_chat {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    border-top: 1px solid #aaa;
+  }
+  .input_chat .container_input {
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .input_chat .container_input input {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    background-color: #cacaca;
+  }
+  .input_chat .container_input .icon {
+    cursor: pointer;
+  }
+}

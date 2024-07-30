@@ -1,0 +1,174 @@
+@media (min-width: "1250px") {
+  .wrapper.mess:hover {
+    background-color: #f2f3f4;
+    cursor: pointer;
+  }
+  .wrapper {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    margin-bottom: 12px;
+    gap: 10px;
+    .image_user {
+      width: 50px;
+      height: 50px;
+      overflow: hidden;
+      border-radius: 50%;
+    }
+    .image_user.image_mess {
+      width: 45px;
+      height: 45px;
+    }
+    .image_user img {
+      width: 100%;
+      height: 100%;
+    }
+    .name_action .name p {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .action_button {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .action_button button p {
+      padding: 6px 10px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .action_button button {
+      border: none;
+      outline: none;
+      background-color: #cacaca;
+      border-radius: 5px;
+    }
+    .action_button button.active {
+      background-color: #3f81fe;
+      color: #fff;
+    }
+  }
+  .name_action {
+    width: 42% !important;
+  }
+  .action_mess_container {
+    width: 40%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    position: relative;
+  }
+  .last_mess {
+    font-size: 14px;
+    color: #aaa;
+  }
+  .icon_action {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: 0.25s;
+  }
+  .icon_action:hover {
+    background-color: #f2f3f4;
+  }
+  ul {
+    width: 150px;
+    padding: 6px;
+  }
+  ul li {
+    border-radius: 5px;
+    padding: 6px;
+    cursor: pointer;
+  }
+  ul li span {
+    font-size: 14px;
+  }
+  ul li:hover {
+    background-color: #f2f3f4;
+  }
+}
+@media (max-width: "670px") {
+  .wrapper.mess:hover {
+    background-color: #f2f3f4;
+    cursor: pointer;
+  }
+  .wrapper {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    margin-bottom: 12px;
+    gap: 15px;
+    .image_user {
+      width: 60px;
+      height: 60px;
+      overflow: hidden;
+      border-radius: 50%;
+    }
+    .image_user.image_mess {
+      width: 45px;
+      height: 45px;
+    }
+    .image_user img {
+      width: 100%;
+      height: 100%;
+    }
+    .name_action .name p {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .action_button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .action_button button p {
+      font-size: 16px;
+      padding: 6px 10px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .action_button button {
+      border: none;
+      outline: none;
+      background-color: #cacaca;
+      border-radius: 5px;
+    }
+    .action_button button.active {
+      background-color: #3f81fe;
+      color: #fff;
+    }
+  }
+  .name_action {
+    width: 50% !important;
+  }
+  .action_mess_container {
+    width: 30%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    position: relative;
+  }
+  .last_mess {
+    font-size: 14px;
+    color: #aaa;
+  }
+  .icon_action {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: 0.25s;
+  }
+  .icon_action:hover {
+    background-color: #f2f3f4;
+  }
+}
