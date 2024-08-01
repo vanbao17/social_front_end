@@ -11,18 +11,59 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import TextAreaInput from "../TextAreaInput/TextAreaInput";
 import DragFile from "../DragFile/DragFile";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { addPost, updatePost } from "../../services/PostServices";
+import { getUserInfoFromToken } from "../../utils/tokenUtils";
+import { formatNewDate } from "../../utils/dateUtils";
+import { updateFilePost, UploadFile } from "../../services/FileServices";
 const cx = classnames.bind(styles);
-function CreatePost({ handleClose }) {
+function CreatePost({ handleClose, dataUpdate = null }) {
   const [stateUpload, setStateUpload] = useState(false);
+  const [stateHandleUpload, setStateHandleUpload] = useState(false);
   const [textPost, setTextPost] = useState("");
-
+  const [file, setFile] = useState(null);
   const isMobile = useMediaQuery({ maxWidth: 670 });
+  console.log(dataUpdate);
+  const user = getUserInfoFromToken();
   const handleStateUpload = (s) => {
     if (s == null) {
       setStateUpload(true);
     } else {
       setStateUpload(false);
+      setFile(null);
+    }
+  };
+  const handleFile = (fileName, filetype) => {
+    if (fileName != undefined && filetype != undefined) {
+      setFile({ fileName: fileName, filetype: filetype });
+    }
+  };
+  const handleSubmit = async () => {
+    setStateHandleUpload(true);
+    try {
+      const responeAddPost = await addPost(user.IDAccount, textPost);
+      const PostId = responeAddPost.data;
+      if (file != null) {
+        await UploadFile(file, PostId);
+        setStateHandleUpload(false);
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+  const handleUpdate = async () => {
+    const PostId = dataUpdate.IDPost;
+    setStateHandleUpload(true);
+    try {
+      const responeUpdatePost = await updatePost(PostId, textPost);
+      if (file != null && responeUpdatePost.status == 200) {
+        await updateFilePost(file, dataUpdate.ID, PostId);
+        setStateHandleUpload(false);
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Error:", error);
     }
   };
   return (
@@ -57,13 +98,20 @@ function CreatePost({ handleClose }) {
               handleDataText={(e) => {
                 setTextPost(e);
               }}
+              textUpdate={dataUpdate}
             />
           </div>
-          {stateUpload == true ? (
+          {stateUpload == true || dataUpdate != null ? (
             <div className={cx("container_dragfile")}>
               <DragFile
                 handleClose={(state) => {
                   handleStateUpload(state);
+                }}
+                handleSendFile={handleFile}
+                stateUpload={stateHandleUpload}
+                fileUpdate={dataUpdate}
+                handleStateUpload={(st) => {
+                  setStateHandleUpload(st);
                 }}
               />
             </div>
@@ -83,9 +131,25 @@ function CreatePost({ handleClose }) {
             </div>
           </div>
           <div className={cx("public")}>
-            <button className={cx(textPost.length > 0 ? "" : "disable")}>
-              <span>Đăng</span>
-            </button>
+            {dataUpdate == null ? (
+              <button
+                onClick={handleSubmit}
+                className={cx(
+                  textPost.length > 0 || file != null ? "" : "disable"
+                )}
+              >
+                <span>Đăng</span>
+              </button>
+            ) : (
+              <button
+                onClick={handleUpdate}
+                className={cx(
+                  textPost.length > 0 || file != null ? "" : "disable"
+                )}
+              >
+                <span>Sửa</span>
+              </button>
+            )}
           </div>
         </div>
       </div>

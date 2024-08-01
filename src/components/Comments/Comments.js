@@ -1,19 +1,34 @@
 import classnames from "classnames/bind";
 import styles from "./Comments.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import CommentItem from "../CommentItem/CommentItem";
+import { getCommentPost } from "../../services/CommentServices";
 
 const cx = classnames.bind(styles);
-function Comments({ comments }) {
-  const [seeMore, setSeeMore] = useState(false);
 
+function Comments({ IDPost }) {
+  const [seeMore, setSeeMore] = useState(false);
+  const [cm, setCm] = useState([]);
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const comments = await getCommentPost(IDPost);
+        setCm(comments);
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+      }
+    };
+
+    fetchComments();
+  }, [IDPost]);
   return (
     <div className={cx("wrapper")}>
-      {seeMore == false ? (
+      {seeMore === false ? (
         <>
-          <CommentItem idRoot={comments[0].id} root={comments[0]}></CommentItem>{" "}
-          {comments.length > 1 ? (
+          {cm[0] && <CommentItem idRoot={cm[0].id} root={cm[0]} />}
+          {cm.length > 1 && (
             <span
               className={cx("see_more")}
               onClick={() => {
@@ -22,17 +37,13 @@ function Comments({ comments }) {
             >
               Hiển thị thêm
             </span>
-          ) : (
-            <></>
           )}
         </>
       ) : (
         <>
-          {comments.map((comment) => {
-            return (
-              <CommentItem idRoot={comment.id} root={comment}></CommentItem>
-            );
-          })}
+          {cm.map((comment) => (
+            <CommentItem key={comment.id} idRoot={comment.id} root={comment} />
+          ))}
           <span
             className={cx("see_more")}
             onClick={() => {
@@ -43,7 +54,6 @@ function Comments({ comments }) {
           </span>
         </>
       )}
-      {}
     </div>
   );
 }

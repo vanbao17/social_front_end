@@ -11,13 +11,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import FriendItem from "../../components/FriendItem/FriendItem";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
 const cx = classnames.bind(styles);
 function Messenger() {
   const [stateSideBarList, setStateSideBarList] = useState(false);
   const isModile = useMediaQuery({ maxWidth: 670 });
+  const refInputFile = useRef();
   return (
     <div className={cx("wrapper")}>
       <div
@@ -94,10 +95,16 @@ function Messenger() {
         </div>
         <div className={cx("input_chat")}>
           <div className={cx("container_input")}>
-            <div className={cx("icon_upload", "icon")}>
+            <div
+              className={cx("icon_upload", "icon")}
+              onClick={() => {
+                refInputFile.current.click();
+              }}
+            >
               <FontAwesomeIcon icon={faPaperclip} />
             </div>
             <input placeholder="Aa" type="text"></input>
+            <input hidden ref={refInputFile} type="file"></input>
             <div className={cx("icon_upload", "icon")}>
               <FontAwesomeIcon icon={faPaperPlane} />
             </div>

@@ -1,11 +1,24 @@
+import { jwtDecode } from "jwt-decode";
 import classnames from "classnames/bind";
 import styles from "./Login.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { UserLogin } from "../../services/UserServices";
+import { getUserInfoFromToken } from "../../utils/tokenUtils";
 const cx = classnames.bind(styles);
 function Login() {
   const [statePassword, setStatePassword] = useState(false);
+  const refMSV = useRef();
+  const refPassword = useRef();
+  const handleLogin = async () => {
+    const masv = refMSV.current.value;
+    const pasword = refPassword.current.value;
+    const response = UserLogin(masv, pasword);
+    if (response) {
+      window.location = "/";
+    }
+  };
   return (
     <div className={cx("wrapper")}>
       <div className={cx("container")}>
@@ -14,12 +27,13 @@ function Login() {
           <h2>Đăng nhập</h2>
           <div className={cx("container_input")}>
             <label>Nhập mã sinh viên</label>
-            <input type="text"></input>
+            <input ref={refMSV} type="text"></input>
           </div>
           <div className={cx("container_input")}>
             <label>Nhập mật khâủ</label>
             <div className={cx("password")}>
               <input
+                ref={refPassword}
                 type={statePassword == false ? "password" : "text"}
               ></input>
               <FontAwesomeIcon
@@ -35,7 +49,7 @@ function Login() {
             <input type="checkbox"></input>
             <span>Lưu mật khẩu ?</span>
           </div>
-          <button>
+          <button onClick={handleLogin}>
             <span>Đăng nhập</span>
           </button>
         </div>

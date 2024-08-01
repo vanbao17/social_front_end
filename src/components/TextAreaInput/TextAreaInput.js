@@ -1,13 +1,20 @@
 import classnames from "classnames/bind";
 import styles from "./TextAreaInput.module.scss";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 const cx = classnames.bind(styles);
-function TextAreaInput({ handleDataText }) {
+function TextAreaInput({ handleDataText, textUpdate = null }) {
   const [fontSize, setFontSize] = useState(18);
   const [content, setContent] = useState("");
   const textAreaRef = useRef(null);
-
+  const updateText = async () => {
+    setContent(textUpdate.Content);
+  };
+  useEffect(() => {
+    if (textUpdate != null) {
+      updateText();
+    }
+  }, [textUpdate]);
   const handleInputChange = (e) => {
     const text = e.target.value;
     setContent(text);

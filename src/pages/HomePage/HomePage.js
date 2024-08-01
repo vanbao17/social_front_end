@@ -3,12 +3,16 @@ import styles from "./HomePage.module.scss";
 import SideBar from "../../components/layouts/SideBar/SideBar";
 import PostItem from "../../components/PostItem/PostItem";
 import CreatePost from "../../components/CreatePost/CreatePost";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DetailPost from "../../components/DetailPost/DetailPost";
+import axios from "axios";
+import { getPosts } from "../../services/PostServices";
 const cx = classnames.bind(styles);
 function HomePage() {
   const [statePopup, setStatePopup] = useState(false);
-  const [stateDetailPost, setStateDetailPost] = useState(false);
+  const [stateDetailPost, setStateDetailPost] = useState(null);
+  const [posts, setPosts] = useState([]);
+  const [dataUpdate, setDataUpdate] = useState(null);
   const handleStatePopup = (state) => {
     if (state == null) {
       setStatePopup(true);
@@ -17,11 +21,22 @@ function HomePage() {
     }
   };
   const handleStateDetailPost = (state) => {
-    if (state == null) {
-      setStateDetailPost(true);
+    if (state != null) {
+      setStateDetailPost(state);
     } else {
-      setStateDetailPost(false);
+      setStateDetailPost(null);
     }
+  };
+  const fetchPosts = async () => {
+    const responsePosts = await getPosts();
+    setPosts(responsePosts.data);
+  };
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+  const handleUpdatePost = (data) => {
+    setDataUpdate(data);
+    setStatePopup(true);
   };
   return (
     <div className={cx("wrapper")}>
@@ -47,30 +62,18 @@ function HomePage() {
             </div>
           </div>
           <div className={cx("list_post")}>
-            <PostItem
-              handleComment={(s) => {
-                handleStateDetailPost(s);
-              }}
-              fixedComment={null}
-            />
-            <PostItem
-              handleComment={(s) => {
-                handleStateDetailPost(s);
-              }}
-              fixedComment={null}
-            />
-            <PostItem
-              handleComment={(s) => {
-                handleStateDetailPost(s);
-              }}
-              fixedComment={null}
-            />
-            <PostItem
-              handleComment={(s) => {
-                handleStateDetailPost(s);
-              }}
-              fixedComment={null}
-            />
+            {posts.map((post) => {
+              return (
+                <PostItem
+                  dataPostItem={post}
+                  handleComment={(s) => {
+                    handleStateDetailPost(s);
+                  }}
+                  fixedComment={null}
+                  updatePost={handleUpdatePost}
+                />
+              );
+            })}
           </div>
         </div>
       </div>
@@ -78,16 +81,19 @@ function HomePage() {
         <CreatePost
           handleClose={(s) => {
             handleStatePopup(s);
+            setDataUpdate(null);
           }}
+          dataUpdate={dataUpdate}
         />
       ) : (
         <></>
       )}
-      {stateDetailPost == true ? (
+      {stateDetailPost != null ? (
         <DetailPost
           handleClose={(s) => {
             handleStateDetailPost(s);
           }}
+          data={stateDetailPost}
         />
       ) : (
         <></>

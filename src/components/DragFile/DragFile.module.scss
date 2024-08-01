@@ -43,11 +43,34 @@
     flex-direction: column;
     font-size: 14px;
     text-align: center;
-    background-color: #f2f3f4;
     transition: 0.25s;
   }
   .train p {
     font-size: 12px;
     margin-top: 6px;
   }
+}
+.file {
+  background-color: #f2f3f4;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  width: fit-content;
+  justify-content: space-between;
+  padding: 10px 24px;
+  border-radius: 10px;
+  .icon {
+    cursor: pointer;
+  }
+}
+.file > div {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  width: fit-content;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
 }

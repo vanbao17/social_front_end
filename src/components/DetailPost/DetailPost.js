@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { useMediaQuery } from "react-responsive";
 const cx = classnames.bind(styles);
-function DetailPost({ handleClose }) {
+function DetailPost({ handleClose, data }) {
   const isMobile = useMediaQuery({ maxWidth: 670 });
   return (
     <Popup
@@ -20,14 +20,14 @@ function DetailPost({ handleClose }) {
           <div
             className={cx("close")}
             onClick={() => {
-              handleClose(false);
+              handleClose(null);
             }}
           >
             <FontAwesomeIcon icon={faClose} />
           </div>
         </div>
         <div className={cx("container_content")}>
-          <PostItem fixedComment={true} />
+          <PostItem fixedComment={true} dataPostItem={data} />
         </div>
       </div>
     </Popup>

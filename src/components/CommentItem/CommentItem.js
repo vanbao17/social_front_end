@@ -2,10 +2,20 @@ import classnames from "classnames/bind";
 import styles from "./CommentItem.module.scss";
 import { useState } from "react";
 import CommentInput from "../CommentInput/CommentInput";
+import images from "../../assets/images";
+import { getUserInfoFromToken } from "../../utils/tokenUtils";
+import { deleteCommentPost } from "../../services/CommentServices";
 const cx = classnames.bind(styles);
-function CommentItem({ root, idRoot, list }) {
+function CommentItem({ root }) {
   const [seeMoreComment, setSeeMoreComment] = useState(false);
-  const [stateReply, setStateReply] = useState(false);
+  const [stateReply, setStateReply] = useState();
+
+  const user = getUserInfoFromToken();
+
+  const deteteCommentPost = async () => {
+    const responseDeleteComment = await deleteCommentPost(root.id);
+    console.log(responseDeleteComment.status);
+  };
   return (
     <div
       className={cx("wrapper")}
@@ -13,20 +23,40 @@ function CommentItem({ root, idRoot, list }) {
     >
       <div className={cx("item")}>
         <div className={cx("image_user")}>
-          <img src="https://scontent.fhan9-1.fna.fbcdn.net/v/t39.30808-1/442511857_1023388895881941_3408531752184613502_n.jpg?stp=dst-jpg_p100x100&_nc_cat=106&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=Gt1aLJ0WVSoQ7kNvgEdij5o&_nc_ht=scontent.fhan9-1.fna&oh=00_AYC4ADXbmzwoJsR7bRyYlUS3O0lfnn7z74S0YyrI5qQ0Sw&oe=66AD049D"></img>
+          <img
+            src={
+              root.image_user == null ? images.default_image : root.image_user
+            }
+          ></img>
         </div>
         <div className={cx("name_content")}>
           <div className={cx("text")}>
-            <p className={cx("name")}>Phạm Văn Bảo</p>
-            <span className={cx("content")}>Phạm Văn Bảo đẹp trai nhất</span>
+            <p className={cx("name")}>{root.author}</p>
+            <span className={cx("content")}>{root.text}</span>
           </div>
-          <span
-            onClick={() => {
-              setStateReply(!stateReply);
-            }}
-          >
-            Trả lời
-          </span>
+          <div className={cx("action_comment")}>
+            <span
+              onClick={() => {
+                setStateReply(false);
+              }}
+            >
+              Trả lời
+            </span>
+            {root.IDAccount == user.IDAccount ? (
+              <>
+                <span
+                  onClick={() => {
+                    setStateReply({ id: root.id, content: root.text });
+                  }}
+                >
+                  chỉnh sửa
+                </span>
+                <span onClick={deteteCommentPost}>xóa</span>
+              </>
+            ) : (
+              <></>
+            )}
+          </div>
           <div
             className={cx("container_reply")}
             style={
@@ -38,7 +68,11 @@ function CommentItem({ root, idRoot, list }) {
                 : { padding: "0" }
             }
           >
-            {stateReply == true ? <CommentInput /> : <></>}
+            {stateReply != undefined ? (
+              <CommentInput update={stateReply == false ? null : stateReply} />
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>
