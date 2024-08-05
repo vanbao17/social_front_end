@@ -5,7 +5,7 @@ const token = localStorage.getItem("token");
 export const UserLogin = async (masv, password) => {
   try {
     const response = await axios.post(
-      "http://localhost:3001/api/v1/login",
+      "http://pycheck.xyz/api/v1/login",
       {
         masv,
         password,
@@ -28,7 +28,7 @@ export const UserLogin = async (masv, password) => {
 export const addCode = async (masv, code) => {
   try {
     const response = await axios.post(
-      "http://localhost:3001/api/v1/addCode",
+      "http://pycheck.xyz/api/v1/addCode",
       {
         masv,
         code,
@@ -48,7 +48,7 @@ export const addCode = async (masv, code) => {
 export const changePass = async (msv, password, passNew) => {
   try {
     const response = await axios.post(
-      "http://localhost:3001/api/v1/changePass",
+      "http://pycheck.xyz/api/v1/changePass",
       { msv, password, passNew },
       {
         headers: {
@@ -65,7 +65,7 @@ export const changePass = async (msv, password, passNew) => {
 export const updateBanner = async (msv, path) => {
   try {
     const response = await axios.post(
-      "http://localhost:3001/api/v1/imageBanner",
+      "http://pycheck.xyz/api/v1/imageBanner",
       { msv, path },
       {
         headers: {
@@ -82,7 +82,7 @@ export const updateBanner = async (msv, path) => {
 export const updateImageProfile = async (msv, path) => {
   try {
     const response = await axios.post(
-      "http://localhost:3001/api/v1/imageUser",
+      "http://pycheck.xyz/api/v1/imageUser",
       { msv, path },
       {
         headers: {
@@ -99,7 +99,7 @@ export const updateImageProfile = async (msv, path) => {
 export const getInforUser = async (msv) => {
   try {
     const response = await axios.post(
-      "http://localhost:3001/api/v1/inforUser",
+      "http://pycheck.xyz/api/v1/inforUser",
       { msv },
       {
         headers: {
@@ -116,7 +116,7 @@ export const getInforUser = async (msv) => {
 export const searchUser = async (msv) => {
   try {
     const response = await axios.post(
-      "http://localhost:3001/api/v1/searchUser",
+      "http://pycheck.xyz/api/v1/searchUser",
       { msv },
       {
         headers: {

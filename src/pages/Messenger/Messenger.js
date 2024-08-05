@@ -29,7 +29,7 @@ function Messenger() {
   const inputRefContent = useRef();
   const location = useLocation();
   const [socket, setSocket] = useState(
-    io("http://localhost:3001", {
+    io("http://pycheck.xyz", {
       transports: ["websocket"],
       upgrade: true,
     })

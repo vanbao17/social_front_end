@@ -2,11 +2,11 @@ import axios from "axios";
 const token = localStorage.getItem("token");
 export const UploadFile = async (fileform, IDPost) => {
   try {
-    const Path = "http://localhost:3001/uploads/" + fileform.fileName;
+    const Path = "http://pycheck.xyz/uploads/" + fileform.fileName;
     const FileType = fileform.filetype;
     const filename = fileform.fileName;
     const responseAddFilePost = await axios.post(
-      "http://localhost:3001/api/v1/addFilePost",
+      "http://pycheck.xyz/api/v1/addFilePost",
       {
         IDPost,
         Path,
@@ -27,11 +27,11 @@ export const UploadFile = async (fileform, IDPost) => {
 };
 export const updateFilePost = async (fileform, IDUpload, PostId) => {
   try {
-    const Path = "http://localhost:3001/uploads/" + fileform.fileName;
+    const Path = "http://pycheck.xyz/uploads/" + fileform.fileName;
     const FileType = fileform.filetype;
     const filename = fileform.fileName;
     const responseAddFilePost = await axios.post(
-      "http://localhost:3001/api/v1/updateFilePost",
+      "http://pycheck.xyz/api/v1/updateFilePost",
       {
         IDUpload,
         PostId,
@@ -54,7 +54,7 @@ export const updateFilePost = async (fileform, IDUpload, PostId) => {
 export const UploadFolder = async (file) => {
   try {
     const response = await axios.post(
-      "http://localhost:3001/api/v1/upload_file_post",
+      "http://pycheck.xyz/api/v1/upload_file_post",
       file,
       {
         headers: {
@@ -71,7 +71,7 @@ export const UploadFolder = async (file) => {
 export const getFilePost = async (IDPost) => {
   try {
     const response = await axios.post(
-      "http://localhost:3001/api/v1/getFilePost",
+      "http://pycheck.xyz/api/v1/getFilePost",
       { IDPost },
       {
         headers: {

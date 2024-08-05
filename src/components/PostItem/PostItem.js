@@ -28,7 +28,7 @@ function PostItem({ fixedComment, handleComment, dataPostItem, updatePost }) {
   const [stateAction, setStateAction] = useState(false);
   const [stateLike, setStateLike] = useState(false);
   const [socket, setSocket] = useState(
-    io("http://localhost:3001", {
+    io("http://pycheck.xyz", {
       transports: ["websocket"],
       upgrade: true,
     })

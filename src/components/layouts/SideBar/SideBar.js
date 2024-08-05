@@ -31,7 +31,7 @@ function SideBar({ handleChangePass = null, user = null }) {
   }, [user]);
   const handleChangeFile = async (event) => {
     const fileSelected = event.target.files[0];
-    const path = "http://localhost:3001/uploads/" + fileSelected.name;
+    const path = "http://pycheck.xyz/uploads/" + fileSelected.name;
     const formData = new FormData();
     formData.append("file", fileSelected);
     setImagePreview([URL.createObjectURL(fileSelected)]);

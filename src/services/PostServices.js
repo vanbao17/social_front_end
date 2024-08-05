@@ -3,7 +3,7 @@ const token = localStorage.getItem("token");
 
 export const getPosts = async () => {
   try {
-    const response = await axios.get("http://localhost:3001/api/v1/posts", {
+    const response = await axios.get("http://pycheck.xyz/api/v1/posts", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -17,7 +17,7 @@ export const getPosts = async () => {
 export const getPostsIdPersonal = async (ID) => {
   try {
     const response = await axios.post(
-      "http://localhost:3001/api/v1/getPostsIdPersonal",
+      "http://pycheck.xyz/api/v1/getPostsIdPersonal",
       {
         ID,
       },
@@ -36,7 +36,7 @@ export const getPostsIdPersonal = async (ID) => {
 export const addPost = async (IDAccount, Content) => {
   try {
     const response = await axios.post(
-      "http://localhost:3001/api/v1/addPost",
+      "http://pycheck.xyz/api/v1/addPost",
       {
         IDAccount,
         Content,
@@ -56,7 +56,7 @@ export const addPost = async (IDAccount, Content) => {
 export const deletePost = async (IDPost) => {
   try {
     const response = await axios.post(
-      "http://localhost:3001/api/v1/deletePost",
+      "http://pycheck.xyz/api/v1/deletePost",
       {
         IDPost,
       },
@@ -75,7 +75,7 @@ export const deletePost = async (IDPost) => {
 export const updatePost = async (IDPost, Content) => {
   try {
     const response = await axios.post(
-      "http://localhost:3001/api/v1/updatePost",
+      "http://pycheck.xyz/api/v1/updatePost",
       {
         IDPost,
         Content,
