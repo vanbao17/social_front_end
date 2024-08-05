@@ -11,6 +11,7 @@ import {
   faCircleInfo,
   faFile,
   faRightFromBracket,
+  faSearch,
   faUser,
   faUserGroup,
 } from "@fortawesome/free-solid-svg-icons";
@@ -18,6 +19,7 @@ import { useContext, useState } from "react";
 import Notifications from "../../Notifications/Notifications";
 import Messages from "../../Messages/Messages";
 import { Context } from "../../../contexts/Context";
+import { getUserInfoFromToken } from "../../../utils/tokenUtils";
 const cx = classnames.bind(styles);
 function Header() {
   const { menufix } = useContext(Context);
@@ -28,6 +30,11 @@ function Header() {
     } else {
       seState(string);
     }
+  };
+  const user = getUserInfoFromToken();
+  const handleLogout = async () => {
+    await localStorage.removeItem("token");
+    window.location.href = "/login";
   };
   return (
     <div className={cx("wrapper", menufix == true ? "fixed" : "")}>
@@ -41,7 +48,7 @@ function Header() {
               <HomeIcon className={cx("icon")} />
             </div>
           </a>
-          <a href="/123">
+          <a href={`/personal?sinhvien=${user.MSV}`}>
             <div className={cx("container_icon")}>
               <FontAwesomeIcon
                 style={{ width: "24px", height: "24px" }}
@@ -50,7 +57,15 @@ function Header() {
               />
             </div>
           </a>
-
+          <a href="/search">
+            <div className={cx("container_icon")}>
+              <FontAwesomeIcon
+                style={{ width: "24px", height: "24px" }}
+                icon={faSearch}
+                className={cx("icon")}
+              />
+            </div>
+          </a>
           <div className={cx("container_icon")}>
             <FontAwesomeIcon
               style={{ width: "24px", height: "24px" }}
@@ -105,10 +120,10 @@ function Header() {
                   <FontAwesomeIcon icon={faCircleInfo} />
                   <span>Thay đổi thông tin tài khoản</span>
                 </a>
-                <a href="#" className={cx("item_action")}>
+                <span className={cx("item_action")} onClick={handleLogout}>
                   <FontAwesomeIcon icon={faRightFromBracket} />
                   <span>Đăng xuất</span>
-                </a>
+                </span>
               </div>
             ) : (
               <></>

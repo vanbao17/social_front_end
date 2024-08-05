@@ -7,12 +7,18 @@ import { useEffect, useState } from "react";
 import DetailPost from "../../components/DetailPost/DetailPost";
 import axios from "axios";
 import { getPosts } from "../../services/PostServices";
+import Popup from "../../components/Popup/Popup";
+import ChangePassword from "../../components/ChangePassword/ChangePassword";
+import { getUserInfoFromToken } from "../../utils/tokenUtils";
 const cx = classnames.bind(styles);
 function HomePage() {
   const [statePopup, setStatePopup] = useState(false);
   const [stateDetailPost, setStateDetailPost] = useState(null);
   const [posts, setPosts] = useState([]);
   const [dataUpdate, setDataUpdate] = useState(null);
+
+  const user = getUserInfoFromToken();
+
   const handleStatePopup = (state) => {
     if (state == null) {
       setStatePopup(true);
@@ -38,11 +44,12 @@ function HomePage() {
     setDataUpdate(data);
     setStatePopup(true);
   };
+
   return (
     <div className={cx("wrapper")}>
       <div className={cx("container")}>
         <div className={cx("container_sideBar")}>
-          <SideBar />
+          <SideBar user={user} />
         </div>
         <div className={cx("home_page")}>
           <div className={cx("container_input_post")}>

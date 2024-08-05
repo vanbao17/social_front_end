@@ -1,5 +1,5 @@
 import axios from "axios";
-
+const token = localStorage.getItem("token");
 export const UploadFile = async (fileform, IDPost) => {
   try {
     const Path = "http://localhost:3001/uploads/" + fileform.fileName;
@@ -12,6 +12,11 @@ export const UploadFile = async (fileform, IDPost) => {
         Path,
         FileType,
         filename,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
     );
     return responseAddFilePost;
@@ -33,6 +38,11 @@ export const updateFilePost = async (fileform, IDUpload, PostId) => {
         Path,
         FileType,
         filename,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
     );
     return responseAddFilePost;
@@ -45,7 +55,12 @@ export const UploadFolder = async (file) => {
   try {
     const response = await axios.post(
       "http://localhost:3001/api/v1/upload_file_post",
-      file
+      file,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     return response;
   } catch (error) {
@@ -57,7 +72,12 @@ export const getFilePost = async (IDPost) => {
   try {
     const response = await axios.post(
       "http://localhost:3001/api/v1/getFilePost",
-      { IDPost }
+      { IDPost },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     return response;
   } catch (error) {

@@ -49,4 +49,13 @@
     width: 50% !important;
     font-weight: 600;
   }
+  .change_password {
+    font-size: 14px;
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(75, 75, 229);
+    cursor: pointer;
+  }
 }

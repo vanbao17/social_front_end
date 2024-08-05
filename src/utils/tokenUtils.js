@@ -9,6 +9,7 @@ export const getUserInfoFromToken = () => {
       // Bạn có thể truy xuất các thuộc tính bên trong token
       const { MSV, Name, LSH, Dob, Image_user, Image_banner, Code } =
         decodedToken;
+
       return decodedToken;
     } catch (error) {
       console.error("Error decoding token:", error);
@@ -18,4 +19,13 @@ export const getUserInfoFromToken = () => {
   }
 
   return null;
+};
+export const token = () => {
+  const token = localStorage.getItem("token");
+
+  return {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
 };

@@ -4,8 +4,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBookmark,
   faBug,
+  faClose,
   faComment,
   faEllipsisV,
+  faFile,
   faPen,
   faThumbsUp,
   faTrash,
@@ -18,10 +20,20 @@ import { formatNewDate } from "../../utils/dateUtils";
 import axios from "axios";
 import { getFilePost } from "../../services/FileServices";
 import { deletePost } from "../../services/PostServices";
+import io from "socket.io-client";
+import { formatArr } from "../../utils/commentUtils";
+import { getUserInfoFromToken } from "../../utils/tokenUtils";
 const cx = classnames.bind(styles);
 function PostItem({ fixedComment, handleComment, dataPostItem, updatePost }) {
   const [stateAction, setStateAction] = useState(false);
   const [stateLike, setStateLike] = useState(false);
+  const [socket, setSocket] = useState(
+    io("http://localhost:3001", {
+      transports: ["websocket"],
+      upgrade: true,
+    })
+  );
+  const user = getUserInfoFromToken();
   const [limitText, setLimitText] = useState(100);
   const [filePost, setFilePost] = useState([]);
 
@@ -55,10 +67,20 @@ function PostItem({ fixedComment, handleComment, dataPostItem, updatePost }) {
       fetchFilePost();
     }
   }, [dataPostItem]);
+
+  const handleSubmit = async (dt) => {
+    await socket.emit("createComment", dt);
+  };
+
   return (
     <div className={cx("wrapper", fixedComment == true ? "fixed" : "")}>
       <div className={cx("title_post")}>
-        <div className={cx("infor")}>
+        <div
+          className={cx("infor")}
+          onClick={() => {
+            window.location.href = `/personal?sinhvien=${dataPostItem.MSV}`;
+          }}
+        >
           <div className={cx("image_user")}>
             {dataPostItem != undefined ? (
               <img
@@ -102,18 +124,24 @@ function PostItem({ fixedComment, handleComment, dataPostItem, updatePost }) {
                 <FontAwesomeIcon icon={faBookmark} />
                 <span>Lưu bài viết</span>
               </li>
-              <li
-                onClick={() => {
-                  updatePost({ ...dataPostItem, ...filePost[0] });
-                }}
-              >
-                <FontAwesomeIcon icon={faPen} />
-                <span>Chỉnh sửa bài viết</span>
-              </li>
-              <li onClick={handleDeletePost}>
-                <FontAwesomeIcon icon={faTrash} />
-                <span>Xóa bài viết</span>
-              </li>
+              {user.IDAccount == dataPostItem.IDAccount ? (
+                <>
+                  <li
+                    onClick={() => {
+                      updatePost({ ...dataPostItem, ...filePost[0] });
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faPen} />
+                    <span>Chỉnh sửa bài viết</span>
+                  </li>
+                  <li onClick={handleDeletePost}>
+                    <FontAwesomeIcon icon={faTrash} />
+                    <span>Xóa bài viết</span>
+                  </li>
+                </>
+              ) : (
+                <></>
+              )}
             </ul>
           ) : (
             <></>
@@ -138,9 +166,30 @@ function PostItem({ fixedComment, handleComment, dataPostItem, updatePost }) {
         )}
 
         <div className={cx("upload")}>
-          {filePost.map((file) => {
+          {filePost.map((file, index) => {
             if (file.FileType == "image") {
-              return <img src={file.Path} alt={file.filename}></img>;
+              return (
+                <img key={index} src={file.Path} alt={file.filename}></img>
+              );
+            }
+            if (file.FileType == "file") {
+              return (
+                <a className={cx("file")} href={file.Path} target="_blank">
+                  <div>
+                    <div className={cx("icon_file")}>
+                      <FontAwesomeIcon icon={faFile} />
+                    </div>
+                    <span>{file.filename}</span>
+                  </div>
+                </a>
+              );
+            }
+            if (file.FileType == "video") {
+              return (
+                <video className={cx("video")} controls={true}>
+                  <source src={file.Path} type="video/mp4" />
+                </video>
+              );
             }
             return;
           })}
@@ -170,7 +219,7 @@ function PostItem({ fixedComment, handleComment, dataPostItem, updatePost }) {
           </div>
         </div>
         <div className={cx("container_comment")}>
-          <Comments IDPost={dataPostItem.ID} />
+          <Comments socket={socket} IDPost={dataPostItem.ID} />
         </div>
         <div
           className={cx(
@@ -179,6 +228,7 @@ function PostItem({ fixedComment, handleComment, dataPostItem, updatePost }) {
           )}
         >
           <CommentInput
+            sendData={handleSubmit}
             idPost={dataPostItem.ID}
             idReply={null}
             fixedComment={fixedComment}

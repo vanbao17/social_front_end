@@ -4,14 +4,16 @@ import ContainerPersonal from "../../components/layouts/ContainerPersonal/Contai
 import { useEffect, useState } from "react";
 import FriendItem from "../../components/FriendItem/FriendItem";
 import { useMediaQuery } from "react-responsive";
+import { getUserInfoFromToken } from "../../utils/tokenUtils";
 const cx = classnames.bind(styles);
 function FriendPage() {
   const [indexNav, setIndexNav] = useState(0);
   const [list, setList] = useState([]);
   const isMobile = useMediaQuery({ maxWidth: 670 });
-  useEffect(() => {}, [indexNav]);
+
+  const user = getUserInfoFromToken();
   return (
-    <ContainerPersonal>
+    <ContainerPersonal user={user}>
       <div className={cx("wrapper")}>
         <div className={cx("container")}>
           <div className={cx("titles")}>
@@ -41,44 +43,7 @@ function FriendPage() {
             </div>
           </div>
           <div className={cx("content")}>
-            <div className={cx("list")}>
-              <FriendItem
-                width={isMobile == false ? `calc(100%/3)` : `100%`}
-                invite={true}
-              />
-              <FriendItem
-                width={isMobile == false ? `calc(100%/3)` : `100%`}
-                friended={true}
-              />
-              <FriendItem
-                width={isMobile == false ? `calc(100%/3)` : `100%`}
-                sended={true}
-              />
-              <FriendItem
-                width={isMobile == false ? `calc(100%/3)` : `100%`}
-                sended={true}
-              />
-              <FriendItem
-                width={isMobile == false ? `calc(100%/3)` : `100%`}
-                sended={true}
-              />
-              <FriendItem
-                width={isMobile == false ? `calc(100%/3)` : `100%`}
-                sended={true}
-              />
-              <FriendItem
-                width={isMobile == false ? `calc(100%/3)` : `100%`}
-                sended={true}
-              />
-              <FriendItem
-                width={isMobile == false ? `calc(100%/3)` : `100%`}
-                sended={true}
-              />
-              <FriendItem
-                width={isMobile == false ? `calc(100%/3)` : `100%`}
-                sended={true}
-              />
-            </div>
+            <div className={cx("list")}></div>
           </div>
         </div>
       </div>

@@ -154,3 +154,34 @@
 .like.active {
   color: #3f81fe;
 }
+.file {
+  background-color: #f2f3f4;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  width: fit-content;
+  justify-content: space-between;
+  padding: 10px 24px;
+  border-radius: 10px;
+  .icon {
+    cursor: pointer;
+  }
+}
+.file > div {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  width: fit-content;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.video {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px auto;
+}

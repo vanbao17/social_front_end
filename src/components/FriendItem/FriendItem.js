@@ -5,20 +5,42 @@ import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 
 import Dropdown from "../Dropdown/Dropdown";
 import { useState } from "react";
+import images from "../../assets/images";
 const cx = classnames.bind(styles);
-function FriendItem({ messeage, width, invite, friended, sended }) {
+function FriendItem({
+  onClick = null,
+  messeage = null,
+  width,
+  invite,
+  friended,
+  sended,
+  active,
+}) {
   const [stateActionMess, setStateActionMess] = useState(false);
   return (
     <div
-      className={cx("wrapper", messeage == true ? "mess" : "")}
+      className={cx(
+        "wrapper",
+        messeage != null ? "mess" : "",
+        active == true ? "active" : ""
+      )}
       style={{ width: width }}
+      onClick={() => {
+        onClick(messeage);
+      }}
     >
-      <div className={cx("image_user", messeage == true ? "image_mess" : "")}>
-        <img src="https://scontent.fdad7-1.fna.fbcdn.net/v/t39.30808-1/377567849_122093605772046627_1065956710991700476_n.jpg?stp=dst-jpg_s200x200&_nc_cat=111&ccb=1-7&_nc_sid=10b96e&_nc_ohc=6EjN3j9STj4Q7kNvgFJqNnY&_nc_ht=scontent.fdad7-1.fna&oh=00_AYAbAoFAoOAzmrUojnFE1Bg0h_rzKNlBANmhEWtiYOzr1A&oe=66AD733F"></img>
+      <div className={cx("image_user", messeage != null ? "image_mess" : "")}>
+        <img
+          src={
+            messeage.image_user == null
+              ? images.default_image
+              : messeage.image_user
+          }
+        ></img>
       </div>
       <div className={cx("name_action")}>
         <div className={cx("name")}>
-          <p>Phạm Văn Bảo</p>
+          <p>{messeage.Name}</p>
         </div>
         <div className={cx("action_button")}>
           {invite == true ? (
@@ -28,7 +50,7 @@ function FriendItem({ messeage, width, invite, friended, sended }) {
           ) : (
             ""
           )}
-          {messeage == true ? (
+          {messeage != null ? (
             <span className={cx("last_mess")}>Bạn:oke </span>
           ) : (
             <></>
@@ -40,7 +62,7 @@ function FriendItem({ messeage, width, invite, friended, sended }) {
           </button>
         </div>
       </div>
-      {messeage == true ? (
+      {messeage != null ? (
         <div className={cx("action_mess_container")}>
           <div
             className={cx("icon_action")}

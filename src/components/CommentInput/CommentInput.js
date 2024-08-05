@@ -1,26 +1,28 @@
 import classnames from "classnames/bind";
 import styles from "./CommentInput.module.scss";
 import { faPaperclip, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getUserInfoFromToken } from "../../utils/tokenUtils";
 import {
   addCommentPost,
   updateCommentPost,
 } from "../../services/CommentServices";
+
 const cx = classnames.bind(styles);
-function CommentInput({ fixedComment, idPost, idReply, update = null }) {
+function CommentInput({
+  fixedComment,
+  idPost,
+  idReply,
+  update = null,
+  sendData,
+}) {
   const [stateInputCommment, setStateInputCommment] = useState(false);
   const [stateUpdate, setStateUpdate] = useState();
   const inputFileRef = useRef();
   const inputContentRef = useRef();
   const user = getUserInfoFromToken();
 
-  useEffect(() => {
-    if (update != null) {
-      setStateUpdate(update.content);
-    }
-  }, [update]);
   const handleSubmit = async () => {
     if (update != null) {
       const responseUpdateComment = await updateCommentPost(
@@ -31,17 +33,22 @@ function CommentInput({ fixedComment, idPost, idReply, update = null }) {
         setStateUpdate("");
       }
     } else {
-      const responseAddComment = await addCommentPost(
-        idPost,
-        user.IDAccount,
-        inputContentRef.current.value,
-        idReply
-      );
-      if (responseAddComment == 200) {
-        inputContentRef.current.value = "";
-      }
+      const ID = idPost;
+      const IDAccount = user.IDAccount;
+      const Name = user.Name;
+      const content = inputContentRef.current.value;
+      const id_reply = idReply;
+      sendData({
+        ID,
+        IDAccount,
+        Name,
+        content,
+        id_reply,
+      });
+      inputContentRef.current.value = "";
     }
   };
+
   return (
     <div className={cx("comment", fixedComment == true ? "fixed" : "")}>
       <div className={cx("container_input_post")}>

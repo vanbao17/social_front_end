@@ -23,7 +23,6 @@ function CreatePost({ handleClose, dataUpdate = null }) {
   const [textPost, setTextPost] = useState("");
   const [file, setFile] = useState(null);
   const isMobile = useMediaQuery({ maxWidth: 670 });
-  console.log(dataUpdate);
   const user = getUserInfoFromToken();
   const handleStateUpload = (s) => {
     if (s == null) {
@@ -46,8 +45,8 @@ function CreatePost({ handleClose, dataUpdate = null }) {
       if (file != null) {
         await UploadFile(file, PostId);
         setStateHandleUpload(false);
-        window.location.reload();
       }
+      window.location.reload();
     } catch (error) {
       console.error("Error:", error);
     }

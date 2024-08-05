@@ -62,7 +62,8 @@
     .container_action_other {
       position: relative;
     }
-    .infor_right .update_infor {
+    .infor_right .update_infor,
+    .messeger {
       padding: 6px 12px;
       background-color: #e5e5e5;
       display: flex;
@@ -71,6 +72,10 @@
       border-radius: 5px;
       cursor: pointer;
       transition: 0.25s;
+    }
+    .messeger {
+      background-color: #3f81fe;
+      color: #fff;
     }
     .update_infor:hover {
       background-color: #f2f3f4;
@@ -241,7 +246,8 @@
     .container_action_other {
       position: relative;
     }
-    .infor_right .update_infor {
+    .infor_right .update_infor,
+    .messeger {
       padding: 6px 12px;
       background-color: #e5e5e5;
       display: flex;
@@ -250,6 +256,10 @@
       border-radius: 5px;
       cursor: pointer;
       transition: 0.25s;
+    }
+    .messeger {
+      background-color: #3f81fe;
+      color: #fff;
     }
     .update_infor:hover {
       background-color: #f2f3f4;

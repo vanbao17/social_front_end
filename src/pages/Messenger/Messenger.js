@@ -11,14 +11,83 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import FriendItem from "../../components/FriendItem/FriendItem";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import { useLocation } from "react-router-dom";
+import { getDataParams, getParams } from "../../utils/urlUtils";
+import io from "socket.io-client";
+import { getConvens, getMesseages } from "../../services/MessServices";
+import { getUserInfoFromToken } from "../../utils/tokenUtils";
+import images from "../../assets/images";
 
 const cx = classnames.bind(styles);
 function Messenger() {
   const [stateSideBarList, setStateSideBarList] = useState(false);
+  const [activeMess, setActiveMess] = useState(null);
   const isModile = useMediaQuery({ maxWidth: 670 });
   const refInputFile = useRef();
+  const inputRefContent = useRef();
+  const location = useLocation();
+  const [socket, setSocket] = useState(
+    io("http://localhost:3001", {
+      transports: ["websocket"],
+      upgrade: true,
+    })
+  );
+  const user = getUserInfoFromToken();
+  const [messages, setMessages] = useState([]);
+  const [listConven, setListConven] = useState([]);
+  const mess = getParams(location, "mess");
+
+  useEffect(() => {
+    const fetchConven = async () => {
+      const responConven = await getConvens(user.IDAccount);
+      if (mess != null) {
+        const filter = responConven.data.filter(
+          (a) => a.friend_id == parseInt(mess)
+        );
+        setActiveMess(...filter);
+      }
+      setListConven(responConven.data);
+    };
+    fetchConven();
+  }, [mess]);
+  const submit = () => {
+    const IDConversations = activeMess.IDConversations;
+    const Sender_id = user.IDAccount;
+    const Content = inputRefContent.current.value;
+    const content_type = "text";
+    const Timestamp = new Date();
+    socket.emit("createMessChat", {
+      IDConversations,
+      Sender_id,
+      Content,
+      content_type,
+      Timestamp,
+    });
+    inputRefContent.current.value = "";
+  };
+  const handleSendMess = (e) => {
+    if (e.key == "Enter") {
+      submit();
+    }
+  };
+  useEffect(() => {
+    if (activeMess != 0 && activeMess != null) {
+      socket.emit("joinMess", parseInt(activeMess.IDConversations));
+      const fetchMess = async () => {
+        const responseMessages = await getMesseages(activeMess.IDConversations);
+        setMessages(responseMessages.data);
+      };
+      fetchMess();
+    }
+  }, [activeMess]);
+  useEffect(() => {
+    socket.on("responseMessChat", (message) => {
+      setMessages((pre) => [...pre, message]);
+    });
+  }, []);
+
   return (
     <div className={cx("wrapper")}>
       <div
@@ -48,82 +117,131 @@ function Messenger() {
           </div>
         </div>
         <div className={cx("list")}>
-          <FriendItem messeage={true}></FriendItem>
-          <FriendItem messeage={true}></FriendItem>
-          <FriendItem messeage={true}></FriendItem>
-          <FriendItem messeage={true}></FriendItem>
-          <FriendItem messeage={true}></FriendItem>
-          <FriendItem messeage={true}></FriendItem>
-          <FriendItem messeage={true}></FriendItem>
-          <FriendItem messeage={true}></FriendItem>
-          <FriendItem messeage={true}></FriendItem>
-          <FriendItem messeage={true}></FriendItem>
-          <FriendItem messeage={true}></FriendItem>
-          <FriendItem messeage={true}></FriendItem>
-          <FriendItem messeage={true}></FriendItem>
+          {listConven.map((conven) => {
+            return (
+              <FriendItem
+                onClick={(messeage) => {
+                  setActiveMess(messeage);
+                }}
+                active={
+                  activeMess != null
+                    ? activeMess.friend_id == conven.friend_id
+                      ? true
+                      : false
+                    : ""
+                }
+                messeage={conven}
+              ></FriendItem>
+            );
+          })}
         </div>
       </div>
-      <div className={cx("container_chat")}>
-        <div className={cx("title_chat")}>
-          {isModile == true ? (
-            <div
-              className={cx("icon_bar")}
-              onClick={() => {
-                setStateSideBarList(!stateSideBarList);
-              }}
-            >
-              <FontAwesomeIcon icon={faBars} />
-            </div>
-          ) : (
-            <></>
-          )}
 
-          <img src="https://scontent.fdad7-2.fna.fbcdn.net/v/t39.30808-6/316174859_3310878975826680_4460039021497477848_n.jpg?stp=c19.0.50.50a_cp0_dst-jpg_p50x50&_nc_cat=100&ccb=1-7&_nc_sid=1760b9&_nc_ohc=u_pmW6bw_zYQ7kNvgG8Lpy9&_nc_ht=scontent.fdad7-2.fna&oh=00_AYAQkxEwPy3sfUF_uIQAx71Aiq_haxRcCOJrs1FEIu41AQ&oe=66AE2C95"></img>
-          <span className={cx("name")}>Phamj Vawn Bpar</span>
-        </div>
-        <div className={cx("content_chat")}>
-          <div className={cx("container_mess_item", "sender")}>
-            <div className={cx("mess_item")}>
-              <span> Hú</span>
+      <div className={cx("container_chat")}>
+        {activeMess != null ? (
+          <div className={cx("title_chat")}>
+            {isModile == true ? (
+              <div
+                className={cx("icon_bar")}
+                onClick={() => {
+                  setStateSideBarList(!stateSideBarList);
+                }}
+              >
+                <FontAwesomeIcon icon={faBars} />
+              </div>
+            ) : (
+              <></>
+            )}
+            <img
+              src={
+                activeMess.image_user == null
+                  ? images.default_image
+                  : activeMess.image_user
+              }
+            ></img>
+            <span className={cx("name")}>{activeMess.Name}</span>
+          </div>
+        ) : (
+          <div className={cx("chat_none")}>
+            Chưa có đoạn chat hãy lựa chọn đoạn chat hoặc nhắn tin với bạn bè
+          </div>
+        )}
+        {activeMess != null ? (
+          <div className={cx("content_chat")}>
+            {messages.map((message) => {
+              return (
+                <div
+                  className={cx(
+                    "container_mess_item",
+                    message.Sender_id == user.IDAccount ? "sender" : "receiver"
+                  )}
+                >
+                  <div className={cx("mess_item")}>
+                    <span> {message.Content}</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <></>
+        )}
+        {activeMess != null ? (
+          <div className={cx("input_chat")}>
+            <div className={cx("container_input")}>
+              <div
+                className={cx("icon_upload", "icon")}
+                onClick={() => {
+                  refInputFile.current.click();
+                }}
+              >
+                <FontAwesomeIcon icon={faPaperclip} />
+              </div>
+
+              <input
+                onKeyDown={handleSendMess}
+                ref={inputRefContent}
+                placeholder="Aa"
+                type="text"
+              ></input>
+              <input hidden ref={refInputFile} type="file"></input>
+              <div className={cx("icon_upload", "icon")}>
+                <FontAwesomeIcon icon={faPaperPlane} onClick={submit} />
+              </div>
             </div>
           </div>
-          <div className={cx("container_mess_item", "receiver")}>
-            <div className={cx("mess_item")}>
-              <span> Cuts</span>
-            </div>
-          </div>
-        </div>
-        <div className={cx("input_chat")}>
-          <div className={cx("container_input")}>
-            <div
-              className={cx("icon_upload", "icon")}
-              onClick={() => {
-                refInputFile.current.click();
-              }}
-            >
-              <FontAwesomeIcon icon={faPaperclip} />
-            </div>
-            <input placeholder="Aa" type="text"></input>
-            <input hidden ref={refInputFile} type="file"></input>
-            <div className={cx("icon_upload", "icon")}>
-              <FontAwesomeIcon icon={faPaperPlane} />
-            </div>
-          </div>
-        </div>
+        ) : (
+          <></>
+        )}
       </div>
       <div className={cx("infor_receiver")}>
-        <div className={cx("infor")}>
-          <img src="https://scontent.fdad7-1.fna.fbcdn.net/v/t39.30808-1/377567849_122093605772046627_1065956710991700476_n.jpg?stp=dst-jpg_s200x200&_nc_cat=111&ccb=1-7&_nc_sid=10b96e&_nc_ohc=6EjN3j9STj4Q7kNvgFJqNnY&_nc_ht=scontent.fdad7-1.fna&oh=00_AYAbAoFAoOAzmrUojnFE1Bg0h_rzKNlBANmhEWtiYOzr1A&oe=66AD733F"></img>
-          <span className={cx("name")}>Phạm Văn Bảo</span>
-          <div className={cx("actions")}>
-            <div className={cx("item_action")}>
-              <div className={cx("icon")}>
-                <FontAwesomeIcon icon={faUser} />
+        {activeMess != null ? (
+          <div className={cx("infor")}>
+            <img
+              src={
+                activeMess.image_user != null
+                  ? activeMess.image_user
+                  : images.default_image
+              }
+            ></img>
+            <span className={cx("name")}>{activeMess.Name}</span>
+            <div className={cx("actions")}>
+              <div
+                className={cx("item_action")}
+                onClick={() => {
+                  window.location.href = `/personal?sinhvien=${activeMess.MSV}`;
+                }}
+              >
+                <div className={cx("icon")}>
+                  <FontAwesomeIcon icon={faUser} />
+                </div>
+                <span> Trang cá nhân</span>
               </div>
-              <span> Trang cá nhân</span>
             </div>
           </div>
-        </div>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );

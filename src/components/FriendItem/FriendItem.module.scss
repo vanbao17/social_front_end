@@ -3,6 +3,9 @@
     background-color: #f2f3f4;
     cursor: pointer;
   }
+  .wrapper.mess.active {
+    background-color: #f2f3f4;
+  }
   .wrapper {
     display: flex;
     align-items: center;

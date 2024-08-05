@@ -3,6 +3,7 @@ import { Context } from "./Context";
 
 function Provider({ children }) {
   const [menufix, setmenufix] = useState(false);
+  const token = localStorage.getItem("token");
   useEffect(() => {
     const fixedmenu = () => {
       if (
@@ -20,7 +21,7 @@ function Provider({ children }) {
     };
   });
   return (
-    <Context.Provider value={{ menufix, setmenufix }}>
+    <Context.Provider value={{ menufix, setmenufix, token }}>
       {children}
     </Context.Provider>
   );

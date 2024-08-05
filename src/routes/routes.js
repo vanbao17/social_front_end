@@ -5,6 +5,7 @@ import HomePage from "../pages/HomePage/HomePage";
 import Login from "../pages/Login/Login";
 import Messenger from "../pages/Messenger/Messenger";
 import PersonalPage from "../pages/PersonalPage/PersonalPage";
+import Search from "../pages/Search/Search";
 const publicRoute = [
   {
     path: configs.Home,
@@ -26,6 +27,10 @@ const publicRoute = [
   {
     path: configs.Messenger,
     component: Messenger,
+  },
+  {
+    path: configs.Search,
+    component: Search,
   },
 ];
 export default publicRoute;

@@ -72,6 +72,9 @@
       height: 100%;
       padding: 12px;
       overflow-y: scroll;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
     }
     .container_mess_item {
       width: 100%;
@@ -156,6 +159,14 @@
     background-color: #aaa;
     cursor: pointer;
     margin-bottom: 4px;
+  }
+  .chat_none {
+    padding: 24px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
   }
 }
 @media (max-width: "670px") {
@@ -290,5 +301,13 @@
   }
   .input_chat .container_input .icon {
     cursor: pointer;
+  }
+  .chat_none {
+    padding: 24px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
   }
 }

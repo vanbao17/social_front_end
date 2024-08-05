@@ -1,13 +1,13 @@
 import classnames from "classnames/bind";
 import styles from "./Comments.module.scss";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import CommentItem from "../CommentItem/CommentItem";
 import { getCommentPost } from "../../services/CommentServices";
-
+import { filterComment, formatArr } from "../../utils/commentUtils";
 const cx = classnames.bind(styles);
 
-function Comments({ IDPost }) {
+function Comments({ IDPost, socket }) {
   const [seeMore, setSeeMore] = useState(false);
   const [cm, setCm] = useState([]);
 
@@ -20,14 +20,39 @@ function Comments({ IDPost }) {
         console.error("Error fetching comments:", error);
       }
     };
-
     fetchComments();
   }, [IDPost]);
+  useEffect(() => {
+    if (socket != null) {
+      socket.emit("joinPost", IDPost);
+      socket.on("newComment", (message) => {
+        setCm((pre) => [...pre, formatArr(message)]);
+      });
+      socket.on("deleteResponseComment", (message) => {
+        const result = filterComment(cm, message);
+        setCm(result);
+      });
+    }
+  }, [socket, cm]);
+
+  const handleDeleteSuccess = async (id) => {
+    const filter = await cm.filter((comment) => comment.id != id);
+    setCm(filter);
+  };
+
   return (
     <div className={cx("wrapper")}>
       {seeMore === false ? (
         <>
-          {cm[0] && <CommentItem idRoot={cm[0].id} root={cm[0]} />}
+          {cm[0] && (
+            <CommentItem
+              IDPost={IDPost}
+              socket={socket}
+              deleteSuccesss={handleDeleteSuccess}
+              idRoot={cm[0].id}
+              root={cm[0]}
+            />
+          )}
           {cm.length > 1 && (
             <span
               className={cx("see_more")}
@@ -42,7 +67,14 @@ function Comments({ IDPost }) {
       ) : (
         <>
           {cm.map((comment) => (
-            <CommentItem key={comment.id} idRoot={comment.id} root={comment} />
+            <CommentItem
+              IDPost={IDPost}
+              socket={socket}
+              deleteSuccesss={handleDeleteSuccess}
+              key={comment.id}
+              idRoot={comment.id}
+              root={comment}
+            />
           ))}
           <span
             className={cx("see_more")}

@@ -1,28 +1,35 @@
 import classnames from "classnames/bind";
 import styles from "./CommentItem.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CommentInput from "../CommentInput/CommentInput";
 import images from "../../assets/images";
 import { getUserInfoFromToken } from "../../utils/tokenUtils";
-import { deleteCommentPost } from "../../services/CommentServices";
 const cx = classnames.bind(styles);
-function CommentItem({ root }) {
+function CommentItem({ root, onClick, handleSendData, socket, IDPost }) {
   const [seeMoreComment, setSeeMoreComment] = useState(false);
   const [stateReply, setStateReply] = useState();
 
   const user = getUserInfoFromToken();
 
-  const deteteCommentPost = async () => {
-    const responseDeleteComment = await deleteCommentPost(root.id);
-    console.log(responseDeleteComment.status);
+  const deteteCommentPost = () => {
+    const IDComment = root.id;
+    if (socket != null) {
+      socket.emit("deleteComment", { IDComment, IDPost });
+    }
   };
   return (
     <div
+      onClick={onClick}
       className={cx("wrapper")}
       style={{ marginLeft: root.level * 30 + "px" }}
     >
       <div className={cx("item")}>
-        <div className={cx("image_user")}>
+        <div
+          className={cx("image_user")}
+          onClick={() => {
+            window.location.href = `/personal?sinhvien=${root.MSV}`;
+          }}
+        >
           <img
             src={
               root.image_user == null ? images.default_image : root.image_user
@@ -69,7 +76,12 @@ function CommentItem({ root }) {
             }
           >
             {stateReply != undefined ? (
-              <CommentInput update={stateReply == false ? null : stateReply} />
+              <CommentInput
+                sendData={(dt) => {
+                  handleSendData(dt);
+                }}
+                update={stateReply == false ? null : stateReply}
+              />
             ) : (
               <></>
             )}

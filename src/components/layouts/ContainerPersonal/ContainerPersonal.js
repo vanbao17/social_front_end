@@ -3,15 +3,38 @@ import styles from "./ContainerPersonal.module.scss";
 import {
   faChevronDown,
   faChevronUp,
+  faMessage,
   faPen,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import Dropdown from "../../Dropdown/Dropdown";
+import images from "../../../assets/images";
+import { getUserInfoFromToken } from "../../../utils/tokenUtils";
+import CryptoJS from "crypto-js";
+import {
+  addConvensation,
+  checkConvensation,
+} from "../../../services/MessServices";
 const cx = classnames.bind(styles);
-function ContainerPersonal({ children }) {
+function ContainerPersonal({ children, user }) {
   const [stateDropdownOption, setStateDropdownOption] = useState(false);
+  const userMain = getUserInfoFromToken();
+  const handleGotoMess = async () => {
+    const responseCheck = await checkConvensation(user.ID);
+    if (responseCheck.data.length == 0) {
+      const responseAddConven = await addConvensation(
+        userMain.IDAccount,
+        user.ID
+      );
+      if (responseAddConven.status == 200) {
+        window.location.href = `/messenger?mess=${responseAddConven.data[0]}`;
+      }
+    } else {
+      window.location.href = `/messenger?mess=${responseCheck.data[0].ID}`;
+    }
+  };
 
   return (
     <div className={cx("wrapper")}>
@@ -19,19 +42,50 @@ function ContainerPersonal({ children }) {
         <div className={cx("wall")}>
           <div className={cx("infor_user")}>
             <div className={cx("banner")}>
-              <img src="https://scontent.fhan9-1.fna.fbcdn.net/v/t39.30808-6/312192024_650730949904687_7331946621600416749_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=P3Gh4YkzcS0Q7kNvgGvzpGK&_nc_ht=scontent.fhan9-1.fna&oh=00_AYDnmlZPZDAgJwMxMsJgnuRHiYyomTplv2tgbuhsbaU__A&oe=66AD44D8"></img>
+              {user != undefined ? (
+                <img
+                  src={
+                    user.image_banner == null
+                      ? images.default_banner
+                      : user.image_banner
+                  }
+                ></img>
+              ) : (
+                <></>
+              )}
             </div>
             <div className={cx("infor")}>
               <div className={cx("infor_left")}>
                 <div className={cx("image_user")}>
-                  <img src="https://scontent.fhan9-1.fna.fbcdn.net/v/t1.30497-1/143086968_2856368904622192_1959732218791162458_n.png?_nc_cat=1&ccb=1-7&_nc_sid=136b72&_nc_ohc=HNv6-cLkGacQ7kNvgH4MWHl&_nc_ht=scontent.fhan9-1.fna&oh=00_AYCA3oIryHJ8pgk9cq9kzGOTzDI-vjZAgx2Qqw17VQGtTQ&oe=66CEC9F8"></img>
+                  {user != undefined ? (
+                    <img
+                      style={{ width: "180px", height: "180px" }}
+                      src={
+                        user.image_user == null
+                          ? images.default_image
+                          : user.image_user
+                      }
+                    ></img>
+                  ) : (
+                    <></>
+                  )}
                 </div>
                 <div className={cx("name_friends")}>
-                  <h2>Phạm Văn Bảo</h2>
+                  <h2>{user != undefined ? user.Name : ""}</h2>
                   <span>428 bạn bè</span>
                 </div>
               </div>
               <div className={cx("infor_right")}>
+                {user &&
+                ((user.ID && user.ID !== userMain.IDAccount) ||
+                  (user.ID === undefined &&
+                    user.IDAccount !== userMain.IDAccount)) ? (
+                  <div className={cx("messeger")} onClick={handleGotoMess}>
+                    <FontAwesomeIcon icon={faMessage} />
+                    <span>Gửi tin nhắn</span>
+                  </div>
+                ) : null}
+
                 <div className={cx("update_infor")}>
                   <FontAwesomeIcon icon={faPen} />
                   <span>Chỉnh sửa trang cá nhân</span>

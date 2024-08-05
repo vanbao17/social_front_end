@@ -17,17 +17,6 @@ function Messages() {
         </div>
         <div className={cx("list_mess")}>
           <MessageItem />
-          <MessageItem />
-          <MessageItem />
-          <MessageItem />
-          <MessageItem />
-          <MessageItem />
-          <MessageItem />
-          <MessageItem />
-          <MessageItem />
-          <MessageItem />
-          <MessageItem />
-          <MessageItem />
         </div>
       </div>
     </div>
