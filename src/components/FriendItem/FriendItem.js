@@ -50,11 +50,11 @@ function FriendItem({
           ) : (
             ""
           )}
-          {messeage != null ? (
+          {/* {messeage != null ? (
             <span className={cx("last_mess")}>Bạn:oke </span>
           ) : (
             <></>
-          )}
+          )} */}
           <button className={cx("non_active")}>
             {invite == true ? <p>Xóa</p> : ""}
             {friended == true ? <p>Hủy kết bạn</p> : ""}

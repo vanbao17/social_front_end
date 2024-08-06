@@ -87,6 +87,7 @@ function Messenger() {
       setMessages((pre) => [...pre, message]);
     });
   }, []);
+  console.log(listConven);
 
   return (
     <div className={cx("wrapper")}>
@@ -122,10 +123,11 @@ function Messenger() {
               <FriendItem
                 onClick={(messeage) => {
                   setActiveMess(messeage);
+                  setStateSideBarList(!stateSideBarList);
                 }}
                 active={
                   activeMess != null
-                    ? activeMess.friend_id == conven.friend_id
+                    ? activeMess.IDConversations == conven.IDConversations
                       ? true
                       : false
                     : ""

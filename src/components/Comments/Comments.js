@@ -36,9 +36,9 @@ function Comments({ IDPost, socket }) {
           setCm((pre) => [...pre, formatArr(message)]);
         }
       });
-      socket.on("deleteResponseComment", async (message) => {
-        const result = await filterComment(cm, message);
-        // console.log(formatArr(...result));
+      socket.on("deleteResponseComment", (message) => {
+        const result = filterComment(cm, message);
+        setCm(result);
       });
     }
   }, [socket, cm]);
@@ -47,8 +47,6 @@ function Comments({ IDPost, socket }) {
     const filter = await cm.filter((comment) => comment.id != id);
     setCm(filter);
   };
-  console.log(cm);
-
   return (
     <div className={cx("wrapper")}>
       {seeMore === false ? (

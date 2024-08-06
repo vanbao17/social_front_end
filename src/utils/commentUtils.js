@@ -36,15 +36,13 @@ export const addComments = (comments, itemComent) => {
   });
 };
 export const filterComment = (arr, target) => {
-  console.log(arr, target);
-
   return arr
     .map((comment) => {
       if (comment.idComment == target.IDComment) {
         return null;
       }
       if (comment.replies.length != 0) {
-        return filterComment(comment.replies, target);
+        comment.replies = filterComment(comment.replies, target);
       }
       return comment;
     })
