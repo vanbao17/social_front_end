@@ -6,6 +6,7 @@ export const formatArr = (comment) => {
     idReply: comment.id_reply,
     level: 0,
     IDAccount: comment.IDAccount,
+    image_user: comment.image_user,
     replies: [],
   };
 };

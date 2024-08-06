@@ -259,6 +259,9 @@
       height: 100%;
       padding: 12px;
       overflow-y: scroll;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
     }
     .container_mess_item {
       width: 100%;

@@ -116,35 +116,24 @@ function PersonalPage() {
 
             <div className={cx("list_post")}>
               <div className={cx("list_post")}>
-                {posts.map((post, index) => {
-                  return (
-                    <PostItem
-                      key={index}
-                      handleComment={(s) => {
-                        handleStateDetailPost(s);
-                      }}
-                      fixedComment={null}
-                      dataPostItem={post}
-                    />
-                  );
-                })}
-              </div>
-              <div
-                style={{
-                  height: "300px",
-                  backgroundColor: "#fff",
-                  padding: "24px",
-                  borderRadius: "5px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "20px",
-                  color: "#aaa",
-                  marginTop: "-10px",
-                }}
-                className={cx("default_post")}
-              >
-                Vẫn chưa có post nào hãy đăng post nào
+                {posts.length != 0 ? (
+                  posts.map((post, index) => {
+                    return (
+                      <PostItem
+                        key={index}
+                        handleComment={(s) => {
+                          handleStateDetailPost(s);
+                        }}
+                        fixedComment={null}
+                        dataPostItem={post}
+                      />
+                    );
+                  })
+                ) : (
+                  <div className={cx("default_post")}>
+                    Vẫn chưa có post nào hãy đăng post nào
+                  </div>
+                )}
               </div>
             </div>
           </div>

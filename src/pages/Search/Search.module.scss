@@ -1,45 +1,94 @@
-.wrapper {
-  width: 50%;
-  background-color: #fff;
-  margin: 0px auto;
-  margin-top: 5px;
-  border-radius: 5px;
-  height: calc(100vh - 75px);
-  padding: 24px;
-}
-.container_input {
-  background-color: #f2f3f4;
-  padding: 0px 12px;
-  display: flex;
-  align-items: center;
-  border-radius: 15px;
-  margin-top: 12px;
-}
-.container_input input {
-  padding: 8px 12px;
-  width: 100%;
-  border: none;
-  outline: none;
-  background-color: transparent;
-}
-.list_result {
-  margin-top: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  height: 88%;
-  overflow-y: scroll;
-  .item {
+@media (min-width: "1250px") {
+  .wrapper {
+    width: 50%;
+    background-color: #fff;
+    margin: 0px auto;
+    margin-top: 5px;
+    border-radius: 5px;
+    height: calc(100vh - 75px);
+    padding: 24px;
+  }
+  .container_input {
+    background-color: #f2f3f4;
+    padding: 0px 12px;
     display: flex;
-    gap: 15px;
-    cursor: pointer;
-  }
-  .item img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-  }
-  .item .name {
+    align-items: center;
+    border-radius: 15px;
     margin-top: 12px;
+  }
+  .container_input input {
+    padding: 8px 12px;
+    width: 100%;
+    border: none;
+    outline: none;
+    background-color: transparent;
+  }
+  .list_result {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 88%;
+    overflow-y: scroll;
+    .item {
+      display: flex;
+      gap: 15px;
+      cursor: pointer;
+    }
+    .item img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+    }
+    .item .name {
+      margin-top: 12px;
+    }
+  }
+}
+@media (max-width: "670px") {
+  .wrapper {
+    width: 95%;
+    background-color: #fff;
+    margin: 0px auto;
+    margin-top: 5px;
+    border-radius: 5px;
+    height: calc(100vh - 75px);
+    padding: 24px;
+  }
+  .container_input {
+    background-color: #f2f3f4;
+    padding: 0px 12px;
+    display: flex;
+    align-items: center;
+    border-radius: 15px;
+    margin-top: 12px;
+  }
+  .container_input input {
+    padding: 8px 12px;
+    width: 100%;
+    border: none;
+    outline: none;
+    background-color: transparent;
+  }
+  .list_result {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 88%;
+    overflow-y: scroll;
+    .item {
+      display: flex;
+      gap: 15px;
+      cursor: pointer;
+    }
+    .item img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+    .item .name {
+      margin-top: 12px;
+    }
   }
 }

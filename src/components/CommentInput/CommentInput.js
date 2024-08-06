@@ -8,6 +8,8 @@ import {
   addCommentPost,
   updateCommentPost,
 } from "../../services/CommentServices";
+import { getInforUser } from "../../services/UserServices";
+import images from "../../assets/images";
 
 const cx = classnames.bind(styles);
 function CommentInput({
@@ -22,7 +24,15 @@ function CommentInput({
   const inputFileRef = useRef();
   const inputContentRef = useRef();
   const user = getUserInfoFromToken();
+  const [inforUser, setInforUser] = useState(null);
 
+  useEffect(() => {
+    const fetchInforUser = async () => {
+      const responseUser = await getInforUser(user.MSV);
+      setInforUser(responseUser.data[0]);
+    };
+    fetchInforUser();
+  }, []);
   const handleSubmit = async () => {
     if (update != null) {
       const responseUpdateComment = await updateCommentPost(
@@ -33,19 +43,23 @@ function CommentInput({
         setStateUpdate("");
       }
     } else {
-      const ID = idPost;
-      const IDAccount = user.IDAccount;
-      const Name = user.Name;
-      const content = inputContentRef.current.value;
-      const id_reply = idReply;
-      sendData({
-        ID,
-        IDAccount,
-        Name,
-        content,
-        id_reply,
-      });
-      inputContentRef.current.value = "";
+      if (inforUser != null) {
+        const ID = idPost;
+        const IDAccount = user.IDAccount;
+        const Name = user.Name;
+        const content = inputContentRef.current.value;
+        const id_reply = idReply;
+        const image_user = inforUser.image_user;
+        sendData({
+          ID,
+          IDAccount,
+          Name,
+          content,
+          id_reply,
+          image_user,
+        });
+        inputContentRef.current.value = "";
+      }
     }
   };
 
@@ -54,7 +68,17 @@ function CommentInput({
       <div className={cx("container_input_post")}>
         <div>
           <div className={cx("image_user")}>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfJ8PF2KNdZi2TxASyVX8vpYf4rk9iCo3NFg&s"></img>
+            {inforUser != null ? (
+              <img
+                src={
+                  inforUser.image_user != null
+                    ? inforUser.image_user
+                    : images.default_image
+                }
+              ></img>
+            ) : (
+              <></>
+            )}
           </div>
           <div className={cx("container_input")}>
             <div>

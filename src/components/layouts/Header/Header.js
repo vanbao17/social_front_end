@@ -137,7 +137,7 @@ function Header() {
             <HomeIcon className={cx("icon")} />
           </div>
         </a>
-        <a href="/sdsdsdss">
+        <a href={`/personal?sinhvien=${user.MSV}`}>
           <div className={cx("container_icon")}>
             <FontAwesomeIcon
               style={{ width: "24px", height: "24px" }}
@@ -155,11 +155,20 @@ function Header() {
             />
           </div>
         </a>
-        <a href="/friends">
+        {/* <a href="/friends">
           <div className={cx("container_icon")}>
             <FontAwesomeIcon
               style={{ width: "24px", height: "24px" }}
               icon={faUserGroup}
+              className={cx("icon")}
+            />
+          </div>
+        </a> */}
+        <a href="/search">
+          <div className={cx("container_icon")}>
+            <FontAwesomeIcon
+              style={{ width: "24px", height: "24px" }}
+              icon={faSearch}
               className={cx("icon")}
             />
           </div>

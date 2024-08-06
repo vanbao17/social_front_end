@@ -16,6 +16,8 @@ import { addPost, updatePost } from "../../services/PostServices";
 import { getUserInfoFromToken } from "../../utils/tokenUtils";
 import { formatNewDate } from "../../utils/dateUtils";
 import { updateFilePost, UploadFile } from "../../services/FileServices";
+import { getInforUser } from "../../services/UserServices";
+import images from "../../assets/images";
 const cx = classnames.bind(styles);
 function CreatePost({ handleClose, dataUpdate = null }) {
   const [stateUpload, setStateUpload] = useState(false);
@@ -23,6 +25,8 @@ function CreatePost({ handleClose, dataUpdate = null }) {
   const [textPost, setTextPost] = useState("");
   const [file, setFile] = useState(null);
   const isMobile = useMediaQuery({ maxWidth: 670 });
+  const [inforUser, setInforUser] = useState(null);
+
   const user = getUserInfoFromToken();
   const handleStateUpload = (s) => {
     if (s == null) {
@@ -32,6 +36,13 @@ function CreatePost({ handleClose, dataUpdate = null }) {
       setFile(null);
     }
   };
+  useEffect(() => {
+    const fetchInforUser = async () => {
+      const responseUser = await getInforUser(user.MSV);
+      setInforUser(responseUser.data[0]);
+    };
+    fetchInforUser();
+  }, []);
   const handleFile = (fileName, filetype) => {
     if (fileName != undefined && filetype != undefined) {
       setFile({ fileName: fileName, filetype: filetype });
@@ -65,6 +76,8 @@ function CreatePost({ handleClose, dataUpdate = null }) {
       console.error("Error:", error);
     }
   };
+  console.log(inforUser);
+
   return (
     <Popup width={isMobile == false ? "30%" : "100%"}>
       <div className={cx("wrapper")}>
@@ -82,10 +95,22 @@ function CreatePost({ handleClose, dataUpdate = null }) {
         <div className={cx("container_content")}>
           <div className={cx("infor_user")}>
             <div className={cx("image_user")}>
-              <img src="https://scontent.fdad7-1.fna.fbcdn.net/v/t1.30497-1/143086968_2856368904622192_1959732218791162458_n.png?stp=cp0_dst-png_p40x40&_nc_cat=1&ccb=1-7&_nc_sid=136b72&_nc_ohc=HNv6-cLkGacQ7kNvgFE7TFa&_nc_ht=scontent.fdad7-1.fna&gid=AnhCHh-KMS9BeXgaLfiFdEG&oh=00_AYBhBY5FurYO-mFA4ovOg5YRqCmkKySbxHKDOuiGM7OUKg&oe=66CDE8F8"></img>
+              {inforUser != null ? (
+                <img
+                  style={{ width: "40px", height: "40px" }}
+                  src={
+                    inforUser.image_user == null
+                      ? images.default_image
+                      : inforUser.image_user
+                  }
+                ></img>
+              ) : (
+                <></>
+              )}
             </div>
             <div className={cx("name_user")}>
-              <p>Phạm Văn Bảo</p>
+              {inforUser != null ? <p>{inforUser.Name}</p> : <></>}
+
               <div className={cx("state_post")}>
                 <FontAwesomeIcon icon={faEarthAmerica} />
                 <span>Công khai</span>

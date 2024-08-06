@@ -77,6 +77,7 @@ function CommentItem({ root, onClick, handleSendData, socket, IDPost }) {
           >
             {stateReply != undefined ? (
               <CommentInput
+                idPost={IDPost}
                 sendData={(dt) => {
                   handleSendData(dt);
                 }}

@@ -138,7 +138,7 @@ function Messenger() {
       </div>
 
       <div className={cx("container_chat")}>
-        <div className={cx("container_icon")}>
+        <div className={cx("title_chat")}>
           {isModile == true ? (
             <div
               className={cx("icon_bar")}
@@ -151,24 +151,29 @@ function Messenger() {
           ) : (
             <></>
           )}
+          {activeMess != null ? (
+            <>
+              <img
+                src={
+                  activeMess.image_user == null
+                    ? images.default_image
+                    : activeMess.image_user
+                }
+              ></img>
+              <span className={cx("name")}>{activeMess.Name}</span>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
-        {activeMess != null ? (
-          <div className={cx("title_chat")}>
-            <img
-              src={
-                activeMess.image_user == null
-                  ? images.default_image
-                  : activeMess.image_user
-              }
-            ></img>
-            <span className={cx("name")}>{activeMess.Name}</span>
-          </div>
-        ) : (
+        {activeMess == null ? (
           <div className={cx("chat_none")}>
             <span>
               Chưa có đoạn chat hãy lựa chọn đoạn chat hoặc nhắn tin với bạn bè
             </span>
           </div>
+        ) : (
+          <></>
         )}
         {activeMess != null ? (
           <div className={cx("content_chat")}>

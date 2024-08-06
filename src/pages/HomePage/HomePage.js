@@ -10,12 +10,14 @@ import { getPosts } from "../../services/PostServices";
 import Popup from "../../components/Popup/Popup";
 import ChangePassword from "../../components/ChangePassword/ChangePassword";
 import { getUserInfoFromToken } from "../../utils/tokenUtils";
+import { getInforUser } from "../../services/UserServices";
 const cx = classnames.bind(styles);
 function HomePage() {
   const [statePopup, setStatePopup] = useState(false);
   const [stateDetailPost, setStateDetailPost] = useState(null);
   const [posts, setPosts] = useState([]);
   const [dataUpdate, setDataUpdate] = useState(null);
+  const [inforUser, setInforUser] = useState(null);
 
   const user = getUserInfoFromToken();
 
@@ -33,11 +35,17 @@ function HomePage() {
       setStateDetailPost(null);
     }
   };
-  const fetchPosts = async () => {
-    const responsePosts = await getPosts();
-    setPosts(responsePosts.data);
-  };
+
   useEffect(() => {
+    const fetchPosts = async () => {
+      const responsePosts = await getPosts();
+      setPosts(responsePosts.data);
+    };
+    const fetchInforUser = async () => {
+      const responseUser = await getInforUser(user.MSV);
+      setInforUser(responseUser.data[0]);
+    };
+    fetchInforUser();
     fetchPosts();
   }, []);
   const handleUpdatePost = (data) => {
@@ -56,7 +64,7 @@ function HomePage() {
             <h3>Đăng bài </h3>
             <div>
               <div className={cx("image_user")}>
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfJ8PF2KNdZi2TxASyVX8vpYf4rk9iCo3NFg&s"></img>
+                <img src={inforUser != null ? inforUser.image_user : ""}></img>
               </div>
               <div
                 className={cx("container_input")}
