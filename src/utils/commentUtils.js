@@ -7,14 +7,40 @@ export const formatArr = (comment) => {
     level: 0,
     IDAccount: comment.IDAccount,
     image_user: comment.image_user,
+    MSV: comment.MSV,
+    idComment: comment.idComment,
     replies: [],
   };
 };
+export const addComments = (comments, itemComent) => {
+  return comments.map((comment) => {
+    if (itemComent.id_reply == comment.idComment) {
+      const newItem = {
+        IDAccount: itemComent.IDAccount,
+        MSV: "21115053120305",
+        author: itemComent.Name,
+        idComment: itemComent.idComment,
+        idReply: itemComent.id_reply,
+        image_user: itemComent.image_user,
+        level: comment.level + 1,
+        text: itemComent.content,
+        replies: [],
+      };
+      comment.replies.push(newItem);
+    }
 
+    // if (comment.replies.length != 0) {
+    //   return addComments(comment.replies, itemComent);
+    // }
+    return comment;
+  });
+};
 export const filterComment = (arr, target) => {
+  console.log(arr, target);
+
   return arr
     .map((comment) => {
-      if (comment.id == target.IDComment) {
+      if (comment.idComment == target.IDComment) {
         return null;
       }
       if (comment.replies.length != 0) {

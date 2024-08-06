@@ -8,15 +8,20 @@ const cx = classnames.bind(styles);
 function CommentItem({ root, onClick, handleSendData, socket, IDPost }) {
   const [seeMoreComment, setSeeMoreComment] = useState(false);
   const [stateReply, setStateReply] = useState();
-
   const user = getUserInfoFromToken();
 
-  const deteteCommentPost = () => {
-    const IDComment = root.id;
+  const deteteCommentPost = async () => {
+    const IDComment = root.idComment;
     if (socket != null) {
-      socket.emit("deleteComment", { IDComment, IDPost });
+      await socket.emit("deleteComment", { IDComment, IDPost });
     }
   };
+  const handleEmit = async (dt) => {
+    dt.id_reply = root.idComment;
+    await socket.emit("createComment", dt);
+    setStateReply();
+  };
+
   return (
     <div
       onClick={onClick}
@@ -79,7 +84,7 @@ function CommentItem({ root, onClick, handleSendData, socket, IDPost }) {
               <CommentInput
                 idPost={IDPost}
                 sendData={(dt) => {
-                  handleSendData(dt);
+                  handleEmit(dt);
                 }}
                 update={stateReply == false ? null : stateReply}
               />
@@ -89,27 +94,9 @@ function CommentItem({ root, onClick, handleSendData, socket, IDPost }) {
           </div>
         </div>
       </div>
-      {root.replies.length >= 2 && root.level == 0 ? (
-        seeMoreComment == false ? (
-          <span
-            style={{
-              marginLeft: 50 + "px",
-              fontSize: "14px",
-              cursor: "pointer",
-            }}
-            onClick={() => {
-              setSeeMoreComment(true);
-            }}
-          >
-            Xem bình luận
-          </span>
-        ) : (
-          <p>
-            <div className={cx("container_list_reply")}>
-              {root.replies.map((cm) => {
-                return <CommentItem root={cm} />;
-              })}
-            </div>
+      {root.replies != undefined ? (
+        root.replies.length >= 2 && root.level == 0 ? (
+          seeMoreComment == false ? (
             <span
               style={{
                 marginLeft: 50 + "px",
@@ -117,19 +104,55 @@ function CommentItem({ root, onClick, handleSendData, socket, IDPost }) {
                 cursor: "pointer",
               }}
               onClick={() => {
-                setSeeMoreComment(false);
+                setSeeMoreComment(true);
               }}
             >
-              Thu gọn
+              Xem bình luận
             </span>
-          </p>
+          ) : (
+            <p>
+              <div className={cx("container_list_reply")}>
+                {root.replies.map((cm) => {
+                  return (
+                    <CommentItem
+                      IDPost={IDPost}
+                      socket={socket}
+                      idRoot={cm.id}
+                      root={cm}
+                    />
+                  );
+                })}
+              </div>
+              <span
+                style={{
+                  marginLeft: 50 + "px",
+                  fontSize: "14px",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  setSeeMoreComment(false);
+                }}
+              >
+                Thu gọn
+              </span>
+            </p>
+          )
+        ) : (
+          <div className={cx("container_list_reply")}>
+            {root.replies.map((cm) => {
+              return (
+                <CommentItem
+                  IDPost={IDPost}
+                  socket={socket}
+                  idRoot={cm.id}
+                  root={cm}
+                />
+              );
+            })}
+          </div>
         )
       ) : (
-        <div className={cx("container_list_reply")}>
-          {root.replies.map((cm) => {
-            return <CommentItem root={cm} />;
-          })}
-        </div>
+        <></>
       )}
     </div>
   );

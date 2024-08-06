@@ -4,13 +4,16 @@ import { useContext, useEffect, useState } from "react";
 
 import CommentItem from "../CommentItem/CommentItem";
 import { getCommentPost } from "../../services/CommentServices";
-import { filterComment, formatArr } from "../../utils/commentUtils";
+import {
+  addComments,
+  filterComment,
+  formatArr,
+} from "../../utils/commentUtils";
 const cx = classnames.bind(styles);
 
 function Comments({ IDPost, socket }) {
   const [seeMore, setSeeMore] = useState(false);
   const [cm, setCm] = useState([]);
-
   useEffect(() => {
     const fetchComments = async () => {
       try {
@@ -26,11 +29,16 @@ function Comments({ IDPost, socket }) {
     if (socket != null) {
       socket.emit("joinPost", IDPost);
       socket.on("newComment", (message) => {
-        setCm((pre) => [...pre, formatArr(message)]);
+        if (message.id_reply != null) {
+          const a = addComments(cm, message);
+          setCm(a);
+        } else {
+          setCm((pre) => [...pre, formatArr(message)]);
+        }
       });
-      socket.on("deleteResponseComment", (message) => {
-        const result = filterComment(cm, message);
-        setCm(result);
+      socket.on("deleteResponseComment", async (message) => {
+        const result = await filterComment(cm, message);
+        // console.log(formatArr(...result));
       });
     }
   }, [socket, cm]);
@@ -39,6 +47,7 @@ function Comments({ IDPost, socket }) {
     const filter = await cm.filter((comment) => comment.id != id);
     setCm(filter);
   };
+  console.log(cm);
 
   return (
     <div className={cx("wrapper")}>
