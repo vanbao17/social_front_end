@@ -138,20 +138,22 @@ function Messenger() {
       </div>
 
       <div className={cx("container_chat")}>
+        <div className={cx("container_icon")}>
+          {isModile == true ? (
+            <div
+              className={cx("icon_bar")}
+              onClick={() => {
+                setStateSideBarList(!stateSideBarList);
+              }}
+            >
+              <FontAwesomeIcon icon={faBars} />
+            </div>
+          ) : (
+            <></>
+          )}
+        </div>
         {activeMess != null ? (
           <div className={cx("title_chat")}>
-            {isModile == true ? (
-              <div
-                className={cx("icon_bar")}
-                onClick={() => {
-                  setStateSideBarList(!stateSideBarList);
-                }}
-              >
-                <FontAwesomeIcon icon={faBars} />
-              </div>
-            ) : (
-              <></>
-            )}
             <img
               src={
                 activeMess.image_user == null
@@ -163,7 +165,9 @@ function Messenger() {
           </div>
         ) : (
           <div className={cx("chat_none")}>
-            Chưa có đoạn chat hãy lựa chọn đoạn chat hoặc nhắn tin với bạn bè
+            <span>
+              Chưa có đoạn chat hãy lựa chọn đoạn chat hoặc nhắn tin với bạn bè
+            </span>
           </div>
         )}
         {activeMess != null ? (

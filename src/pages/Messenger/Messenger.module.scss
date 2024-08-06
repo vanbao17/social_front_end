@@ -160,7 +160,7 @@
     cursor: pointer;
     margin-bottom: 4px;
   }
-  .chat_none {
+  .chat_none span {
     padding: 24px;
     height: 100%;
     display: flex;
@@ -302,7 +302,10 @@
   .input_chat .container_input .icon {
     cursor: pointer;
   }
-  .chat_none {
+  .container_icon {
+    padding: 6px 24px;
+  }
+  .chat_none span {
     padding: 24px;
     height: 100%;
     display: flex;
