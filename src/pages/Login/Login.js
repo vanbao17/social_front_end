@@ -14,7 +14,8 @@ function Login() {
   const handleLogin = async () => {
     const masv = refMSV.current.value;
     const pasword = refPassword.current.value;
-    const response = UserLogin(masv, pasword);
+    const response = await UserLogin(masv, pasword);
+    await localStorage.setItem("token", response.data.token);
     if (response) {
       window.location = "/";
     }

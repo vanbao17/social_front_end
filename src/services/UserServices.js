@@ -4,22 +4,11 @@ const token = localStorage.getItem("token");
 
 export const UserLogin = async (masv, password) => {
   try {
-    const response = await axios.post(
-      "http://pycheck.xyz/api/v1/login",
-      {
-        masv,
-        password,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    console.log(response.data.token);
-
-    await localStorage.setItem("token", response.data.token);
-    return response.data.token;
+    const response = await axios.post("https://pycheck.xyz/api/v1/login", {
+      masv,
+      password,
+    });
+    return response;
   } catch (error) {
     console.error("Error fetching data", error);
     throw error;
@@ -28,7 +17,7 @@ export const UserLogin = async (masv, password) => {
 export const addCode = async (masv, code) => {
   try {
     const response = await axios.post(
-      "http://pycheck.xyz/api/v1/addCode",
+      "https://pycheck.xyz/api/v1/addCode",
       {
         masv,
         code,
@@ -48,7 +37,7 @@ export const addCode = async (masv, code) => {
 export const changePass = async (msv, password, passNew) => {
   try {
     const response = await axios.post(
-      "http://pycheck.xyz/api/v1/changePass",
+      "https://pycheck.xyz/api/v1/changePass",
       { msv, password, passNew },
       {
         headers: {
@@ -65,7 +54,7 @@ export const changePass = async (msv, password, passNew) => {
 export const updateBanner = async (msv, path) => {
   try {
     const response = await axios.post(
-      "http://pycheck.xyz/api/v1/imageBanner",
+      "https://pycheck.xyz/api/v1/imageBanner",
       { msv, path },
       {
         headers: {
@@ -82,7 +71,7 @@ export const updateBanner = async (msv, path) => {
 export const updateImageProfile = async (msv, path) => {
   try {
     const response = await axios.post(
-      "http://pycheck.xyz/api/v1/imageUser",
+      "https://pycheck.xyz/api/v1/imageUser",
       { msv, path },
       {
         headers: {
@@ -99,7 +88,7 @@ export const updateImageProfile = async (msv, path) => {
 export const getInforUser = async (msv) => {
   try {
     const response = await axios.post(
-      "http://pycheck.xyz/api/v1/inforUser",
+      "https://pycheck.xyz/api/v1/inforUser",
       { msv },
       {
         headers: {
@@ -116,7 +105,7 @@ export const getInforUser = async (msv) => {
 export const searchUser = async (msv) => {
   try {
     const response = await axios.post(
-      "http://pycheck.xyz/api/v1/searchUser",
+      "https://pycheck.xyz/api/v1/searchUser",
       { msv },
       {
         headers: {

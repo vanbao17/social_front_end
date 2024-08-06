@@ -4,7 +4,7 @@ const token = localStorage.getItem("token");
 export const addConvensation = async (IDAccount1, IDAccount2) => {
   try {
     const responseAddConven = await axios.post(
-      "http://pycheck.xyz/api/v1/addConvensation",
+      "https://pycheck.xyz/api/v1/addConvensation",
       { IDAccount1, IDAccount2 },
       {
         headers: {
@@ -21,7 +21,7 @@ export const addConvensation = async (IDAccount1, IDAccount2) => {
 export const checkConvensation = async (IDAccount2) => {
   try {
     const responseAddConven = await axios.post(
-      "http://pycheck.xyz/api/v1/checkConvensation",
+      "https://pycheck.xyz/api/v1/checkConvensation",
       { IDAccount2 },
       {
         headers: {
@@ -37,7 +37,7 @@ export const checkConvensation = async (IDAccount2) => {
 export const getConvens = async (id) => {
   try {
     const responseAddConven = await axios.post(
-      "http://pycheck.xyz/api/v1/getConvens",
+      "https://pycheck.xyz/api/v1/getConvens",
       { id },
       {
         headers: {
@@ -53,7 +53,7 @@ export const getConvens = async (id) => {
 export const getMesseages = async (id) => {
   try {
     const responseAddConven = await axios.post(
-      "http://pycheck.xyz/api/v1/getMesseages",
+      "https://pycheck.xyz/api/v1/getMesseages",
       { id },
       {
         headers: {

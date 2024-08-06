@@ -4,7 +4,7 @@ const token = localStorage.getItem("token");
 export const getCommentPost = async (IDPost) => {
   try {
     const responseCommentPost = await axios.post(
-      "http://pycheck.xyz/api/v1/getCommentsPost",
+      "https://pycheck.xyz/api/v1/getCommentsPost",
       { IDPost },
       {
         headers: {
@@ -21,7 +21,7 @@ export const getCommentPost = async (IDPost) => {
 export const addCommentPost = async (IDPost, UserID, Content, ReplyId) => {
   try {
     const responseCommentPost = await axios.post(
-      "http://pycheck.xyz/api/v1/addCommentPost",
+      "https://pycheck.xyz/api/v1/addCommentPost",
       { IDPost, UserID, Content, ReplyId },
       {
         headers: {
@@ -38,7 +38,7 @@ export const addCommentPost = async (IDPost, UserID, Content, ReplyId) => {
 export const updateCommentPost = async (IDComment, Content) => {
   try {
     const responseCommentPost = await axios.post(
-      "http://pycheck.xyz/api/v1/updateCommentPost",
+      "https://pycheck.xyz/api/v1/updateCommentPost",
       { IDComment, Content },
       {
         headers: {
@@ -55,7 +55,7 @@ export const updateCommentPost = async (IDComment, Content) => {
 export const deleteCommentPost = async (IDComment) => {
   try {
     const responseCommentPost = await axios.post(
-      "http://pycheck.xyz/api/v1/deleteCommentPost",
+      "https://pycheck.xyz/api/v1/deleteCommentPost",
       { IDComment },
       {
         headers: {
