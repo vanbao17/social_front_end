@@ -17,7 +17,6 @@ import Comments from "../Comments/Comments";
 import CommentInput from "../CommentInput/CommentInput";
 import images from "../../assets/images";
 import { formatNewDate } from "../../utils/dateUtils";
-import axios from "axios";
 import { getFilePost } from "../../services/FileServices";
 import {
   checkUserLike,

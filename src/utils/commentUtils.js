@@ -17,7 +17,7 @@ export const addComments = (comments, itemComent) => {
     if (itemComent.id_reply == comment.idComment) {
       const newItem = {
         IDAccount: itemComent.IDAccount,
-        MSV: "21115053120305",
+        MSV: itemComent.MSV,
         author: itemComent.Name,
         idComment: itemComent.idComment,
         idReply: itemComent.id_reply,
@@ -27,11 +27,11 @@ export const addComments = (comments, itemComent) => {
         replies: [],
       };
       comment.replies.push(newItem);
+      return comment;
     }
-
-    // if (comment.replies.length != 0) {
-    //   return addComments(comment.replies, itemComent);
-    // }
+    if (comment.replies.length != 0) {
+      return addComments(comment.replies, itemComent);
+    }
     return comment;
   });
 };

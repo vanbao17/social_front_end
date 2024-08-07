@@ -5,6 +5,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { searchUser } from "../../services/UserServices";
 import images from "../../assets/images";
+import Loadding from "../../components/layouts/Loadding/Loadding";
 const cx = classnames.bind(styles);
 function Search() {
   const [results, setResults] = useState([]);

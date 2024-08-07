@@ -15,6 +15,8 @@
     align-items: center;
     border-radius: 15px;
     margin-top: 12px;
+    border: 1px solid transparent;
+    transition: 0.25s;
   }
   .container_input input {
     padding: 8px 12px;
@@ -22,6 +24,10 @@
     border: none;
     outline: none;
     background-color: transparent;
+  }
+  .container_input:hover {
+    box-shadow: 0 0 0 1px #3f81fe;
+    border-color: #3f81fe;
   }
   .list_result {
     margin-top: 24px;
@@ -62,6 +68,8 @@
     align-items: center;
     border-radius: 15px;
     margin-top: 12px;
+    border: 1px solid transparent;
+    transition: 0.25s;
   }
   .container_input input {
     padding: 8px 12px;
@@ -69,6 +77,12 @@
     border: none;
     outline: none;
     background-color: transparent;
+  }
+  .container_input:hover {
+    border: 1px solid #3f81fe;
+    box-shadow: 0 0 0 1px #3f81fe;
+  }
+  .container_input:focus {
   }
   .list_result {
     margin-top: 24px;

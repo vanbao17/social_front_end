@@ -3,19 +3,23 @@ import classnames from "classnames/bind";
 import styles from "./Login.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { UserLogin } from "../../services/UserServices";
 import { getUserInfoFromToken } from "../../utils/tokenUtils";
+import { Context } from "../../contexts/Context";
 const cx = classnames.bind(styles);
 function Login() {
   const [statePassword, setStatePassword] = useState(false);
+  const { loadding, setLoadding } = useContext(Context);
   const refMSV = useRef();
   const refPassword = useRef();
   const handleLogin = async () => {
+    setLoadding(true);
     const masv = refMSV.current.value;
     const pasword = refPassword.current.value;
     const response = await UserLogin(masv, pasword);
     await localStorage.setItem("token", response.data.token);
+    setLoadding(false);
     if (response) {
       window.location = "/";
     }

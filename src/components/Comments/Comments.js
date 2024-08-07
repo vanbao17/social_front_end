@@ -1,6 +1,6 @@
 import classnames from "classnames/bind";
 import styles from "./Comments.module.scss";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 
 import CommentItem from "../CommentItem/CommentItem";
 import { getCommentPost } from "../../services/CommentServices";
@@ -27,33 +27,34 @@ function Comments({ IDPost, socket }) {
     fetchComments();
   }, [IDPost]);
   useEffect(() => {
-    if (socket != null) {
-      socket.emit("joinPost", IDPost);
-      socket.on("newComment", (message) => {
-        if (message.id_reply != null) {
-          const a = addComments(cm, message);
-          setCm(a);
-        } else {
-          setCm((pre) => [...pre, formatArr(message)]);
-        }
-      });
-      socket.on("deleteResponseComment", (message) => {
-        const result = filterComment(cm, message);
-        setCm(result);
-      });
-    }
-  }, [socket]);
-
-  const handleDeleteSuccess = async (id) => {
-    const filter = await cm.filter((comment) => comment.id != id);
-    setCm(filter);
-  };
-  useEffect(() => {
+    socket.emit("joinPost", IDPost);
     socket.on("updateComment", async (updateComment) => {
       const a = await updateCommentList(cm, updateComment);
       setCm(a);
     });
+    socket.on("deleteResponseComment", (message) => {
+      const result = filterComment(cm, message);
+      setCm(result);
+    });
+    socket.on("newComment", (message) => {
+      if (message.id_reply != null) {
+        const a = addComments(cm, message);
+        // setCm(a);
+      } else {
+        setCm((pre) => [...pre, formatArr(message)]);
+      }
+    });
+    return () => {
+      socket.off("updateComment");
+      socket.off("deleteResponseComment");
+      socket.off("newComment");
+    };
   }, [cm]);
+  // const handleDeleteSuccess = async (id) => {
+  //   const filter = await cm.filter((comment) => comment.id != id);
+  //   setCm(filter);
+  // };
+
   return (
     <div className={cx("wrapper")}>
       {seeMore === false ? (
@@ -62,7 +63,7 @@ function Comments({ IDPost, socket }) {
             <CommentItem
               IDPost={IDPost}
               socket={socket}
-              deleteSuccesss={handleDeleteSuccess}
+              // deleteSuccesss={handleDeleteSuccess}
               idRoot={cm[0].id}
               root={cm[0]}
             />
@@ -84,7 +85,7 @@ function Comments({ IDPost, socket }) {
             <CommentItem
               IDPost={IDPost}
               socket={socket}
-              deleteSuccesss={handleDeleteSuccess}
+              // deleteSuccesss={handleDeleteSuccess}
               key={comment.id}
               idRoot={comment.id}
               root={comment}
