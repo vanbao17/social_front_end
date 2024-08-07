@@ -19,14 +19,21 @@ import images from "../../assets/images";
 import { formatNewDate } from "../../utils/dateUtils";
 import axios from "axios";
 import { getFilePost } from "../../services/FileServices";
-import { deletePost } from "../../services/PostServices";
+import {
+  checkUserLike,
+  deletePost,
+  getCountComment,
+  getCountLike,
+} from "../../services/PostServices";
 import io from "socket.io-client";
 import { formatArr } from "../../utils/commentUtils";
 import { getUserInfoFromToken } from "../../utils/tokenUtils";
 const cx = classnames.bind(styles);
 function PostItem({ fixedComment, handleComment, dataPostItem, updatePost }) {
   const [stateAction, setStateAction] = useState(false);
-  const [stateLike, setStateLike] = useState(false);
+  const [stateLike, setStateLike] = useState(null);
+  const [indLike, setIndLike] = useState(0);
+  const [indComment, setIndComment] = useState(0);
   const [socket, setSocket] = useState(
     io("https://pycheck.xyz", {
       transports: ["websocket"],
@@ -36,6 +43,24 @@ function PostItem({ fixedComment, handleComment, dataPostItem, updatePost }) {
   const user = getUserInfoFromToken();
   const [limitText, setLimitText] = useState(100);
   const [filePost, setFilePost] = useState([]);
+  useEffect(() => {
+    const fetchCountLike = async () => {
+      const IDPost = dataPostItem.ID;
+      const IDAccount = user.IDAccount;
+      const responseCountLike = await getCountLike(IDPost, IDAccount);
+      const responseCheck = await checkUserLike(IDAccount);
+      const responseCountComment = await getCountComment(IDPost);
+      setIndComment(responseCountComment.data[0]["count(*)"]);
+
+      if (responseCheck.data[0]["count(*)"] == 1) {
+        setStateLike(true);
+      } else {
+        setStateLike(false);
+      }
+      setIndLike(responseCountLike.data[0]["count(*)"]);
+    };
+    fetchCountLike();
+  }, []);
 
   const countText = (string, index) => {
     const filter = string.split(" ");
@@ -49,7 +74,6 @@ function PostItem({ fixedComment, handleComment, dataPostItem, updatePost }) {
       setLimitText(100);
     }
   };
-
   const fetchFilePost = async () => {
     const IDPost = dataPostItem.ID;
     const responseFilePost = await getFilePost(IDPost);
@@ -71,7 +95,24 @@ function PostItem({ fixedComment, handleComment, dataPostItem, updatePost }) {
   const handleSubmit = async (dt) => {
     await socket.emit("createComment", dt);
   };
-
+  useEffect(() => {
+    socket.emit("joinPost", dataPostItem.ID);
+    socket.on("responseCountLike", (count) => {
+      setIndLike(count);
+    });
+    socket.on("countComment", (count) => {
+      setIndComment(count[0]["count(*)"]);
+    });
+  }, [stateLike]);
+  const handleLike = async () => {
+    const IDPost = dataPostItem.ID;
+    const IDAccount = user.IDAccount;
+    if (stateLike == false) {
+      await socket.emit("likePost", { IDPost, IDAccount });
+    } else {
+      await socket.emit("unLikePost", { IDPost, IDAccount });
+    }
+  };
   return (
     <div className={cx("wrapper", fixedComment == true ? "fixed" : "")}>
       <div className={cx("title_post")}>
@@ -195,14 +236,15 @@ function PostItem({ fixedComment, handleComment, dataPostItem, updatePost }) {
           })}
         </div>
         <div className={cx("interact_post")}>
-          <span>1k2 lượt thích</span>
-          <span>1k2 lượt bình luận</span>
+          <span>{indLike} lượt thích</span>
+          <span>{indComment} lượt bình luận</span>
         </div>
         <div className={cx("action_post")}>
           <div
             className={cx("like", stateLike == true ? "active" : "")}
             onClick={() => {
               setStateLike(!stateLike);
+              handleLike();
             }}
           >
             <FontAwesomeIcon icon={faThumbsUp} />

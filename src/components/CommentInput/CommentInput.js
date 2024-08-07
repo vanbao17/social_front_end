@@ -18,6 +18,7 @@ function CommentInput({
   idReply,
   update = null,
   sendData,
+  socket,
 }) {
   const [stateInputCommment, setStateInputCommment] = useState(false);
   const [stateUpdate, setStateUpdate] = useState();
@@ -35,13 +36,18 @@ function CommentInput({
   }, []);
   const handleSubmit = async () => {
     if (update != null) {
-      const responseUpdateComment = await updateCommentPost(
-        update.id,
-        stateUpdate
-      );
-      if (responseUpdateComment.status == 200) {
-        setStateUpdate("");
-      }
+      socket.emit("joinPost", idPost);
+      const IDComment = update.id;
+      const content = stateUpdate;
+      await socket.emit("updateComment", { idPost, IDComment, content });
+
+      // const responseUpdateComment = await updateCommentPost(
+      //   update.id,
+      //   stateUpdate
+      // );
+      // if (responseUpdateComment.status == 200) {
+      //   setStateUpdate("");
+      // }
     } else {
       if (inforUser != null) {
         const ID = idPost;
@@ -58,11 +64,15 @@ function CommentInput({
           id_reply,
           image_user,
         });
-        inputContentRef.current.value = "";
       }
     }
+    setStateUpdate("");
   };
-
+  useEffect(() => {
+    if (update != null) {
+      setStateUpdate(update.content);
+    }
+  }, [update]);
   return (
     <div className={cx("comment", fixedComment == true ? "fixed" : "")}>
       <div className={cx("container_input_post")}>

@@ -92,3 +92,54 @@ export const updatePost = async (IDPost, Content) => {
     throw error;
   }
 };
+export const getCountLike = async (IDPost, IDAccount) => {
+  try {
+    const response = await axios.post(
+      "https://pycheck.xyz/api/v1/getCountLike",
+      { IDPost, IDAccount },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    console.error("Error fetching data", error);
+    throw error;
+  }
+};
+export const getCountComment = async (IDPost) => {
+  try {
+    const response = await axios.post(
+      "https://pycheck.xyz/api/v1/getCountComment",
+      { IDPost },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    console.error("Error fetching data", error);
+    throw error;
+  }
+};
+export const checkUserLike = async (IDAccount) => {
+  try {
+    const response = await axios.post(
+      "https://pycheck.xyz/api/v1/checkUserLike",
+      { IDAccount },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    console.error("Error fetching data", error);
+    throw error;
+  }
+};

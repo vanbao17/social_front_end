@@ -8,6 +8,7 @@ import {
   addComments,
   filterComment,
   formatArr,
+  updateCommentList,
 } from "../../utils/commentUtils";
 const cx = classnames.bind(styles);
 
@@ -41,12 +42,18 @@ function Comments({ IDPost, socket }) {
         setCm(result);
       });
     }
-  }, [socket, cm]);
+  }, [socket]);
 
   const handleDeleteSuccess = async (id) => {
     const filter = await cm.filter((comment) => comment.id != id);
     setCm(filter);
   };
+  useEffect(() => {
+    socket.on("updateComment", async (updateComment) => {
+      const a = await updateCommentList(cm, updateComment);
+      setCm(a);
+    });
+  }, [cm]);
   return (
     <div className={cx("wrapper")}>
       {seeMore === false ? (

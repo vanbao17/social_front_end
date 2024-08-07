@@ -48,3 +48,14 @@ export const filterComment = (arr, target) => {
     })
     .filter((comment) => comment != null);
 };
+export const updateCommentList = (arr, target) => {
+  return arr.map((comment) => {
+    if (comment.idComment == target.IDComment) {
+      comment.text = target.content;
+    }
+    if (comment.replies.length != 0) {
+      comment.replies = filterComment(comment.replies, target);
+    }
+    return comment;
+  });
+};

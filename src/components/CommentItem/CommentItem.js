@@ -5,7 +5,7 @@ import CommentInput from "../CommentInput/CommentInput";
 import images from "../../assets/images";
 import { getUserInfoFromToken } from "../../utils/tokenUtils";
 const cx = classnames.bind(styles);
-function CommentItem({ root, onClick, handleSendData, socket, IDPost }) {
+function CommentItem({ root, onClick, socket, IDPost }) {
   const [seeMoreComment, setSeeMoreComment] = useState(false);
   const [stateReply, setStateReply] = useState();
   const user = getUserInfoFromToken();
@@ -58,7 +58,7 @@ function CommentItem({ root, onClick, handleSendData, socket, IDPost }) {
               <>
                 <span
                   onClick={() => {
-                    setStateReply({ id: root.id, content: root.text });
+                    setStateReply({ id: root.idComment, content: root.text });
                   }}
                 >
                   chỉnh sửa
@@ -87,6 +87,7 @@ function CommentItem({ root, onClick, handleSendData, socket, IDPost }) {
                   handleEmit(dt);
                 }}
                 update={stateReply == false ? null : stateReply}
+                socket={socket}
               />
             ) : (
               <></>

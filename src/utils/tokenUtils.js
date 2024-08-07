@@ -2,11 +2,15 @@ import { jwtDecode } from "jwt-decode";
 
 export const getUserInfoFromToken = () => {
   const token = localStorage.getItem("token");
+  const decodedToken = jwtDecode(token);
+  const currentTime = Date.now() / 1000;
   if (token) {
     try {
-      const decodedToken = jwtDecode(token);
-
-      // Bạn có thể truy xuất các thuộc tính bên trong token
+      if (decodedToken.exp && decodedToken.exp < currentTime) {
+        localStorage.removeItem("token");
+        window.location.href = "/login";
+        return null;
+      }
       const { MSV, Name, LSH, Dob, Image_user, Image_banner, Code } =
         decodedToken;
 
@@ -15,9 +19,8 @@ export const getUserInfoFromToken = () => {
       console.error("Error decoding token:", error);
     }
   } else {
-    console.error("No token found in localStorage");
+    window.location.href = "/login";
   }
-
   return null;
 };
 export const token = () => {
