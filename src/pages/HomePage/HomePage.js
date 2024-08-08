@@ -11,6 +11,7 @@ import Popup from "../../components/Popup/Popup";
 import ChangePassword from "../../components/ChangePassword/ChangePassword";
 import { getUserInfoFromToken } from "../../utils/tokenUtils";
 import { getInforUser } from "../../services/UserServices";
+import images from "../../assets/images";
 const cx = classnames.bind(styles);
 function HomePage() {
   const [statePopup, setStatePopup] = useState(false);
@@ -64,7 +65,15 @@ function HomePage() {
             <h3>Đăng bài </h3>
             <div>
               <div className={cx("image_user")}>
-                <img src={inforUser != null ? inforUser.image_user : ""}></img>
+                <img
+                  src={
+                    inforUser != null
+                      ? inforUser.image_user == null
+                        ? images.default_image
+                        : inforUser.image_user
+                      : ""
+                  }
+                ></img>
               </div>
               <div
                 className={cx("container_input")}

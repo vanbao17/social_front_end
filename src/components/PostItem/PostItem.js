@@ -27,6 +27,7 @@ import {
 import io from "socket.io-client";
 import { formatArr } from "../../utils/commentUtils";
 import { getUserInfoFromToken } from "../../utils/tokenUtils";
+import { deleteNoti } from "../../services/UserServices";
 const cx = classnames.bind(styles);
 function PostItem({ fixedComment, handleComment, dataPostItem, updatePost }) {
   const [stateAction, setStateAction] = useState(false);
@@ -47,7 +48,7 @@ function PostItem({ fixedComment, handleComment, dataPostItem, updatePost }) {
       const IDPost = dataPostItem.ID;
       const IDAccount = user.IDAccount;
       const responseCountLike = await getCountLike(IDPost, IDAccount);
-      const responseCheck = await checkUserLike(IDAccount);
+      const responseCheck = await checkUserLike(IDAccount, IDPost);
       const responseCountComment = await getCountComment(IDPost);
       setIndComment(responseCountComment.data[0]["count(*)"]);
 
@@ -92,26 +93,60 @@ function PostItem({ fixedComment, handleComment, dataPostItem, updatePost }) {
   }, [dataPostItem]);
 
   const handleSubmit = async (dt) => {
+    const IDPost = dataPostItem.ID;
+    const IDAccount = user.IDAccount;
     await socket.emit("createComment", dt);
+    const Sender_id = IDAccount;
+    const IDAccountPost = dataPostItem.IDAccount;
+    const stateNoti = "comment";
+    await socket.emit("postNotification", {
+      IDPost,
+      IDAccountPost,
+      Sender_id,
+      stateNoti,
+    });
   };
   useEffect(() => {
     socket.emit("joinPost", dataPostItem.ID);
+    socket.emit("joinSocial", dataPostItem.IDAccount);
     socket.on("responseCountLike", (count) => {
       setIndLike(count);
     });
     socket.on("countComment", (count) => {
       setIndComment(count[0]["count(*)"]);
     });
+    return () => {
+      socket.off("responseCountLike");
+      socket.off("countComment");
+    };
   }, [stateLike]);
   const handleLike = async () => {
     const IDPost = dataPostItem.ID;
     const IDAccount = user.IDAccount;
     if (stateLike == false) {
       await socket.emit("likePost", { IDPost, IDAccount });
+      if (IDAccount != dataPostItem.IDAccount) {
+        const Sender_id = IDAccount;
+        const IDAccountPost = dataPostItem.IDAccount;
+        const stateNoti = "like";
+        await socket.emit("postNotification", {
+          IDPost,
+          IDAccountPost,
+          Sender_id,
+          stateNoti,
+        });
+      }
     } else {
       await socket.emit("unLikePost", { IDPost, IDAccount });
+      await deleteNoti(IDAccount, IDPost, "like");
     }
+    return () => {
+      socket.off("likePost");
+      socket.off("unLikePost");
+      socket.off("postNotification");
+    };
   };
+
   return (
     <div className={cx("wrapper", fixedComment == true ? "fixed" : "")}>
       <div className={cx("title_post")}>

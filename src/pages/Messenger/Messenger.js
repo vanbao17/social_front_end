@@ -37,14 +37,14 @@ function Messenger() {
   const user = getUserInfoFromToken();
   const [messages, setMessages] = useState([]);
   const [listConven, setListConven] = useState([]);
-  const mess = getParams(location, "mess");
+  const mess = parseInt(getParams(location, "mess"));
 
   useEffect(() => {
     const fetchConven = async () => {
       const responConven = await getConvens(user.IDAccount);
       if (mess != null) {
         const filter = responConven.data.filter(
-          (a) => a.friend_id == parseInt(mess)
+          (a) => a.IDConversations == mess
         );
         setActiveMess(...filter);
       }
@@ -52,6 +52,7 @@ function Messenger() {
     };
     fetchConven();
   }, [mess]);
+
   const submit = () => {
     const IDConversations = activeMess.IDConversations;
     const Sender_id = user.IDAccount;
@@ -87,8 +88,6 @@ function Messenger() {
       setMessages((pre) => [...pre, message]);
     });
   }, []);
-  console.log(listConven);
-
   return (
     <div className={cx("wrapper")}>
       <div

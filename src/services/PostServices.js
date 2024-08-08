@@ -14,6 +14,23 @@ export const getPosts = async () => {
     throw error;
   }
 };
+export const getPostWithId = async (IDPost) => {
+  try {
+    const response = await axios.post(
+      "https://pycheck.xyz/api/v1/getPostWithId",
+      { IDPost },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    console.error("Error fetching data", error);
+    throw error;
+  }
+};
 export const getPostsIdPersonal = async (ID) => {
   try {
     const response = await axios.post(
@@ -126,11 +143,11 @@ export const getCountComment = async (IDPost) => {
     throw error;
   }
 };
-export const checkUserLike = async (IDAccount) => {
+export const checkUserLike = async (IDAccount, IDPost) => {
   try {
     const response = await axios.post(
       "https://pycheck.xyz/api/v1/checkUserLike",
-      { IDAccount },
+      { IDAccount, IDPost },
       {
         headers: {
           Authorization: `Bearer ${token}`,

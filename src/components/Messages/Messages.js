@@ -3,8 +3,18 @@ import styles from "./Messages.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import MessageItem from "../MessageItem/MessageItem";
+import { useEffect, useState } from "react";
+import { getConvens } from "../../services/MessServices";
 const cx = classnames.bind(styles);
-function Messages() {
+function Messages({ IDAccount }) {
+  const [listConven, setListConven] = useState([]);
+  useEffect(() => {
+    const fetchConven = async () => {
+      const responConven = await getConvens(IDAccount);
+      setListConven(responConven.data);
+    };
+    fetchConven();
+  }, []);
   return (
     <div className={cx("wrapper")}>
       <div className={cx("container")}>
@@ -16,7 +26,9 @@ function Messages() {
           <input type="text" placeholder="Nhập tên đoạn chat"></input>
         </div>
         <div className={cx("list_mess")}>
-          <MessageItem />
+          {listConven.map((user) => {
+            return <MessageItem user={user} />;
+          })}
         </div>
       </div>
     </div>

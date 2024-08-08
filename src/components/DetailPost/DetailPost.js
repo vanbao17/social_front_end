@@ -8,6 +8,7 @@ import { useMediaQuery } from "react-responsive";
 const cx = classnames.bind(styles);
 function DetailPost({ handleClose, data }) {
   const isMobile = useMediaQuery({ maxWidth: 670 });
+
   return (
     <Popup
       width={isMobile == false ? "40%" : "100%"}
@@ -16,7 +17,7 @@ function DetailPost({ handleClose, data }) {
       <div className={cx("wrapper")}>
         <div className={cx("title")}>
           <div className={cx("hidden")}></div>
-          <h2>Bài viết của Phạm Văn Bảo</h2>
+          <h2>Bài viết của {data.Name}</h2>
           <div
             className={cx("close")}
             onClick={() => {

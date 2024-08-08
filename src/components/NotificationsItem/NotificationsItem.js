@@ -1,23 +1,67 @@
 import classnames from "classnames/bind";
 import styles from "./NotificationsItem.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faComment } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheck,
+  faComment,
+  faThumbsUp,
+} from "@fortawesome/free-solid-svg-icons";
+import images from "../../assets/images";
 const cx = classnames.bind(styles);
-function NotificationsItem() {
+function NotificationsItem({ data }) {
+  console.log(data);
+
   return (
-    <div className={cx("wrapper")}>
+    <div
+      className={cx("wrapper")}
+      onClick={() => {
+        window.location.href = `/post?id=${data.IDPost}`;
+      }}
+    >
       <div className={cx("container")}>
-        <div className={cx("image_user")}>
-          <img src="https://scontent.fdad8-1.fna.fbcdn.net/v/t1.30497-1/143086968_2856368904622192_1959732218791162458_n.png?stp=cp0_dst-png_p56x56&_nc_cat=1&ccb=1-7&_nc_sid=22ec41&_nc_ohc=HNv6-cLkGacQ7kNvgFdcUtx&_nc_ht=scontent.fdad8-1.fna&gid=AlHdGHaxM5OhNlcGwP6PZEc&oh=00_AYBuVQB-5t2faPz7SRW2hQeIEbVK2GR_tHrVLIu9W9gS7A&oe=66CC9778"></img>
+        <div
+          className={cx("image_user")}
+          onClick={() => {
+            window.location.href = `/personal?sinhvien=${data.MSV}`;
+          }}
+        >
+          {data != null ? (
+            <img
+              src={
+                data.image_user == null ? images.default_image : data.image_user
+              }
+            ></img>
+          ) : (
+            <></>
+          )}
+
           <div className={cx("icon_comment")}>
-            <FontAwesomeIcon icon={faComment} className={cx("icon")} />
+            {data != null ? (
+              data.type == "like" ? (
+                <FontAwesomeIcon icon={faThumbsUp} className={cx("icon")} />
+              ) : (
+                <FontAwesomeIcon icon={faComment} className={cx("icon")} />
+              )
+            ) : (
+              <></>
+            )}
           </div>
         </div>
         <div className={cx("content")}>
-          <div className={cx("content_noti")}>
-            <strong>Pham Van Bao</strong> va <strong>van bao</strong> đã bình
-            luận vào bài viết của bạn.
-          </div>
+          {data != null ? (
+            <div className={cx("content_noti")}>
+              <strong
+                onClick={() => {
+                  window.location.href = `/personal?sinhvien=${data.MSV}`;
+                }}
+              >
+                {data.Name}
+              </strong>{" "}
+              {data.content}
+            </div>
+          ) : (
+            <></>
+          )}
           <div className={cx("time_stap")}>52 Phút</div>
         </div>
       </div>

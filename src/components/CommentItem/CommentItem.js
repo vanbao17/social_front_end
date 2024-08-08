@@ -4,20 +4,31 @@ import { useEffect, useState } from "react";
 import CommentInput from "../CommentInput/CommentInput";
 import images from "../../assets/images";
 import { getUserInfoFromToken } from "../../utils/tokenUtils";
+import { deleteNoti } from "../../services/UserServices";
 const cx = classnames.bind(styles);
 function CommentItem({ root, onClick, socket, IDPost }) {
   const [seeMoreComment, setSeeMoreComment] = useState(false);
   const [stateReply, setStateReply] = useState();
   const user = getUserInfoFromToken();
-
   const deteteCommentPost = async () => {
     const IDComment = root.idComment;
     if (socket != null) {
       await socket.emit("deleteComment", { IDComment, IDPost });
+      await deleteNoti(user.IDAccount, IDPost, "comment");
     }
   };
   const handleEmit = async (dt) => {
     dt.id_reply = root.idComment;
+    socket.emit("joinSocial", root.IDAccount);
+    const Sender_id = user.IDAccount;
+    const IDAccountPost = root.IDAccount;
+    const stateNoti = "comment";
+    await socket.emit("postNotification", {
+      IDPost,
+      IDAccountPost,
+      Sender_id,
+      stateNoti,
+    });
     await socket.emit("createComment", dt);
     setStateReply();
   };

@@ -15,15 +15,26 @@ import {
   faUser,
   faUserGroup,
 } from "@fortawesome/free-solid-svg-icons";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Notifications from "../../Notifications/Notifications";
 import Messages from "../../Messages/Messages";
 import { Context } from "../../../contexts/Context";
 import { getUserInfoFromToken } from "../../../utils/tokenUtils";
+import { getInforUser } from "../../../services/UserServices";
+import images from "../../../assets/images";
+import io from "socket.io-client";
 const cx = classnames.bind(styles);
 function Header() {
   const { menufix } = useContext(Context);
   const [state, seState] = useState();
+  const [inforUser, setInforUser] = useState(null);
+  const { dataNoti, setDataNoti } = useContext(Context);
+  const [socket, setSocket] = useState(
+    io("https://pycheck.xyz", {
+      transports: ["websocket"],
+      upgrade: true,
+    })
+  );
   const handleChangeState = (string) => {
     if (string == state) {
       seState("");
@@ -36,12 +47,25 @@ function Header() {
     await localStorage.removeItem("token");
     window.location.href = "/login";
   };
+
+  useEffect(() => {
+    socket.emit("joinSocial", user.IDAccount);
+    socket.on("responseNoti", (data) => {
+      setDataNoti(...data);
+    });
+    const fetchInforUser = async () => {
+      const responseUser = await getInforUser(user.MSV);
+      setInforUser(responseUser.data[0]);
+    };
+    fetchInforUser();
+  }, []);
   return (
-    <div className={cx("wrapper", menufix == true ? "fixed" : "")}>
+    // <div className={cx("wrapper", menufix == true ? "fixed" : "")}>
+    <div className={cx("wrapper")}>
       <div className={cx("container")}>
-        <div className={cx("logo")}>
+        <a href="/" className={cx("logo")}>
           <span>PVB</span>
-        </div>
+        </a>
         <div className={cx("navigates")}>
           <a href="/">
             <div className={cx("container_icon")}>
@@ -107,13 +131,31 @@ function Header() {
             }}
           >
             <img
+              style={{ objectFit: "cover" }}
               className={cx("image_user")}
-              src="https://scontent.fdad8-1.fna.fbcdn.net/v/t1.30497-1/143086968_2856368904622192_1959732218791162458_n.png?stp=cp0_dst-png_p40x40&_nc_cat=1&ccb=1-7&_nc_sid=136b72&_nc_ohc=HNv6-cLkGacQ7kNvgFdcUtx&_nc_ht=scontent.fdad8-1.fna&oh=00_AYBkhIWqpFu3pdCGdQR07OEQyfOcxaYXMpqj1QWA5qOCCw&oe=66CC9778"
+              src={
+                inforUser != null
+                  ? inforUser.image_user == null
+                    ? images.default_image
+                    : inforUser.image_user
+                  : ""
+              }
             ></img>
           </div>
           <div className={cx("container_dropdown")}>
-            {state == "mess" ? <Messages /> : <></>}
-            {state == "noti" ? <Notifications /> : <></>}
+            {state == "mess" ? (
+              <Messages IDAccount={inforUser != null ? inforUser.ID : ""} />
+            ) : (
+              <></>
+            )}
+            {state == "noti" ? (
+              <Notifications
+                socket={socket}
+                IDAccount={inforUser != null ? inforUser.ID : ""}
+              />
+            ) : (
+              <></>
+            )}
             {state == "user" ? (
               <div className={cx("actions_user")}>
                 <a href="#" className={cx("item_action")}>
@@ -178,9 +220,11 @@ function Header() {
             <MessIcon className={cx("icon")} />
           </div>
         </a>
-        <div className={cx("container_icon")}>
-          <NotificationIcon className={cx("icon")} />
-        </div>
+        <a href="/notifications">
+          <div className={cx("container_icon")}>
+            <NotificationIcon className={cx("icon")} />
+          </div>
+        </a>
       </div>
     </div>
   );

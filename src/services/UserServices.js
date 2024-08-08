@@ -139,3 +139,37 @@ export const cryptUser = (string) => {
     }
   }
 };
+export const getNoti = async (IDAccount) => {
+  try {
+    const response = await axios.post(
+      "https://pycheck.xyz/api/v1/getNoti",
+      { IDAccount },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    console.error("Error fetching data", error);
+    throw error;
+  }
+};
+export const deleteNoti = async (sender_id, IDPost, stateNoti) => {
+  try {
+    const response = await axios.post(
+      "https://pycheck.xyz/api/v1/deleteNotification",
+      { sender_id, IDPost, stateNoti },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    console.error("Error fetching data", error);
+    throw error;
+  }
+};

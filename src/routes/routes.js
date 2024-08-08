@@ -1,5 +1,7 @@
 import LayoutEmpty from "../components/layouts/LayoutEmpty/LayoutEmpty";
+import Notifications from "../components/Notifications/Notifications";
 import configs from "../configs/configs";
+import DetailPost from "../pages/DetailPost/DetailPost";
 import FriendPage from "../pages/FriendPage/FriendPage";
 import HomePage from "../pages/HomePage/HomePage";
 import Login from "../pages/Login/Login";
@@ -31,6 +33,14 @@ const publicRoute = [
   {
     path: configs.Search,
     component: Search,
+  },
+  {
+    path: configs.Post,
+    component: DetailPost,
+  },
+  {
+    path: configs.Notifications,
+    component: Notifications,
   },
 ];
 export default publicRoute;

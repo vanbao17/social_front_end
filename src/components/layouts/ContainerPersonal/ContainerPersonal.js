@@ -59,7 +59,11 @@ function ContainerPersonal({ children, user }) {
                 <div className={cx("image_user")}>
                   {user != undefined ? (
                     <img
-                      style={{ width: "180px", height: "180px" }}
+                      style={{
+                        width: "180px",
+                        height: "180px",
+                        objectFit: "cover",
+                      }}
                       src={
                         user.image_user == null
                           ? images.default_image
