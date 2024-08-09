@@ -2,10 +2,10 @@ import { jwtDecode } from "jwt-decode";
 
 export const getUserInfoFromToken = () => {
   const token = localStorage.getItem("token");
-  const decodedToken = jwtDecode(token);
   const currentTime = Date.now() / 1000;
   if (token) {
     try {
+      const decodedToken = jwtDecode(token);
       if (decodedToken.exp && decodedToken.exp < currentTime) {
         localStorage.removeItem("token");
         window.location.href = "/login";
