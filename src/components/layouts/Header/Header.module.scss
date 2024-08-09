@@ -57,6 +57,7 @@
       background-color: #f2f3f4;
       border-radius: 50%;
       transition: 0.25s;
+      position: relative;
     }
     .actions .container_icon:hover {
       background-color: #cfc7c7;
@@ -112,6 +113,20 @@
   }
   .navigates_phone {
     display: none;
+  }
+  .index_coment {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: red;
+    color: #fff;
+    position: absolute;
+    top: 0;
+    right: -10%;
+    border-radius: 50%;
+    font-size: 14px;
   }
 }
 @media (max-width: "670px  ") {
@@ -215,5 +230,22 @@
     align-items: center;
     justify-content: space-between;
     user-select: none;
+  }
+  .navigates_phone .container_icon {
+    position: relative;
+  }
+  .index_coment {
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: red;
+    color: #fff;
+    position: absolute;
+    top: -30%;
+    right: -30%;
+    border-radius: 50%;
+    font-size: 14px;
   }
 }

@@ -20,7 +20,7 @@ import Notifications from "../../Notifications/Notifications";
 import Messages from "../../Messages/Messages";
 import { Context } from "../../../contexts/Context";
 import { getUserInfoFromToken } from "../../../utils/tokenUtils";
-import { getInforUser } from "../../../services/UserServices";
+import { getInforUser, getNoti } from "../../../services/UserServices";
 import images from "../../../assets/images";
 import io from "socket.io-client";
 const cx = classnames.bind(styles);
@@ -28,6 +28,7 @@ function Header() {
   const { menufix } = useContext(Context);
   const [state, seState] = useState();
   const [inforUser, setInforUser] = useState(null);
+  const [listNoti, setListNoti] = useState([]);
   const { dataNoti, setDataNoti } = useContext(Context);
   const [socket, setSocket] = useState(
     io("https://pycheck.xyz", {
@@ -59,6 +60,15 @@ function Header() {
     };
     fetchInforUser();
   }, []);
+  useEffect(() => {
+    const fetchNoti = async () => {
+      const responseNotis = await getNoti(user.IDAccount);
+      const filter = responseNotis.data.filter((noti) => noti.is_read == 0);
+      setListNoti(filter);
+    };
+    fetchNoti();
+  }, [dataNoti]);
+
   return (
     // <div className={cx("wrapper", menufix == true ? "fixed" : "")}>
     <div className={cx("wrapper")}>
@@ -122,6 +132,12 @@ function Header() {
               handleChangeState("noti");
             }}
           >
+            {listNoti.length != 0 ? (
+              <span className={cx("index_coment")}>{listNoti.length}</span>
+            ) : (
+              <></>
+            )}
+
             <NotificationIcon className={cx("icon")} />
           </div>
           <div
@@ -148,14 +164,7 @@ function Header() {
             ) : (
               <></>
             )}
-            {state == "noti" ? (
-              <Notifications
-                socket={socket}
-                IDAccount={inforUser != null ? inforUser.ID : ""}
-              />
-            ) : (
-              <></>
-            )}
+            {state == "noti" ? <Notifications /> : <></>}
             {state == "user" ? (
               <div className={cx("actions_user")}>
                 <a href="#" className={cx("item_action")}>
@@ -222,6 +231,11 @@ function Header() {
         </a>
         <a href="/notifications">
           <div className={cx("container_icon")}>
+            {listNoti.length != 0 ? (
+              <span className={cx("index_coment")}>{listNoti.length}</span>
+            ) : (
+              <></>
+            )}
             <NotificationIcon className={cx("icon")} />
           </div>
         </a>

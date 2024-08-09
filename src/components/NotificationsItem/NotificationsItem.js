@@ -7,17 +7,20 @@ import {
   faThumbsUp,
 } from "@fortawesome/free-solid-svg-icons";
 import images from "../../assets/images";
+import { updateIsRead } from "../../services/UserServices";
 const cx = classnames.bind(styles);
 function NotificationsItem({ data }) {
-  console.log(data);
+  const update = async () => {
+    const responseUpdateIsRead = await updateIsRead(data.IDNoti);
+    console.log(responseUpdateIsRead.status);
 
+    if (responseUpdateIsRead.status == 200) {
+      window.location.href = `/post?id=${data.IDPost}`;
+    }
+  };
   return (
-    <div
-      className={cx("wrapper")}
-      onClick={() => {
-        window.location.href = `/post?id=${data.IDPost}`;
-      }}
-    >
+    <div className={cx("wrapper")} onClick={update}>
+      {data.is_read == 0 ? <div className={cx("dot")}></div> : <></>}
       <div className={cx("container")}>
         <div
           className={cx("image_user")}

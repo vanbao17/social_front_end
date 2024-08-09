@@ -4,6 +4,9 @@
   border-radius: 10px;
   cursor: pointer;
   transition: 0.25s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 .wrapper:hover {
   background-color: #f2f3f4;
@@ -51,4 +54,10 @@
     font-size: 12px;
     color: #aaa;
   }
+}
+.dot {
+  width: 16px;
+  height: 16px;
+  background-color: #3f81fe;
+  border-radius: 50%;
 }

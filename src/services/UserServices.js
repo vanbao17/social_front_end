@@ -173,3 +173,20 @@ export const deleteNoti = async (sender_id, IDPost, stateNoti) => {
     throw error;
   }
 };
+export const updateIsRead = async (IDNoti) => {
+  try {
+    const response = await axios.post(
+      "https://pycheck.xyz/api/v1/updateIsRead",
+      { IDNoti },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    console.error("Error fetching data", error);
+    throw error;
+  }
+};
