@@ -160,7 +160,6 @@ function PersonalPage() {
       {stateChangePass == true ? (
         <ChangePassword
           handleClose={(a) => {
-            console.log(a);
             setStateChangePass(a);
           }}
         />

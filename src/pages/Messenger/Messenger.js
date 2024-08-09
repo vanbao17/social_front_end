@@ -59,12 +59,21 @@ function Messenger() {
     const Content = inputRefContent.current.value;
     const content_type = "text";
     const Timestamp = new Date();
+    const IDPost = IDConversations;
+    const IDAccountPost = activeMess.IDOtherAccount;
+    const stateNoti = "messenger";
     socket.emit("createMessChat", {
       IDConversations,
       Sender_id,
       Content,
       content_type,
       Timestamp,
+    });
+    socket.emit("postNotification", {
+      IDPost,
+      IDAccountPost,
+      Sender_id,
+      stateNoti,
     });
     inputRefContent.current.value = "";
   };

@@ -12,10 +12,12 @@ const cx = classnames.bind(styles);
 function NotificationsItem({ data }) {
   const update = async () => {
     const responseUpdateIsRead = await updateIsRead(data.IDNoti);
-    console.log(responseUpdateIsRead.status);
-
     if (responseUpdateIsRead.status == 200) {
-      window.location.href = `/post?id=${data.IDPost}`;
+      if ((data.type = "messenger")) {
+        window.location.href = `/messenger?mess=${data.IDPost}`;
+      } else {
+        window.location.href = `/post?id=${data.IDPost}`;
+      }
     }
   };
   return (

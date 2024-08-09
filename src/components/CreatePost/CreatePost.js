@@ -76,7 +76,6 @@ function CreatePost({ handleClose, dataUpdate = null }) {
       console.error("Error:", error);
     }
   };
-  console.log(inforUser);
 
   return (
     <Popup width={isMobile == false ? "30%" : "100%"}>

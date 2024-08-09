@@ -9,17 +9,23 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
 import { Context } from "../../contexts/Context";
+import { updateIsRead } from "../../services/UserServices";
 const cx = classnames.bind(styles);
 function NotiPopup({ data }) {
   const { setDataNoti } = useContext(Context);
+  const update = async () => {
+    const responseUpdateIsRead = await updateIsRead(data.IDNoti);
+    if (responseUpdateIsRead.status == 200) {
+      if ((data.type = "messenger")) {
+        window.location.href = `/messenger?mess=${data.IDPost}`;
+      } else {
+        window.location.href = `/post?id=${data.IDPost}`;
+      }
+    }
+  };
   return (
     <div className={cx("wrapper")}>
-      <div
-        className={cx("wrapper_item")}
-        onClick={() => {
-          window.location.href = `/post?id=${data.IDPost}`;
-        }}
-      >
+      <div className={cx("wrapper_item")} onClick={update}>
         <div className={cx("container")}>
           <div
             className={cx("image_user")}
