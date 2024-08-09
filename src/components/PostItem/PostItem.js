@@ -146,7 +146,6 @@ function PostItem({ fixedComment, handleComment, dataPostItem, updatePost }) {
       socket.off("postNotification");
     };
   };
-
   return (
     <div className={cx("wrapper", fixedComment == true ? "fixed" : "")}>
       <div className={cx("title_post")}>

@@ -40,7 +40,10 @@ function HomePage() {
   useEffect(() => {
     const fetchPosts = async () => {
       const responsePosts = await getPosts();
-      setPosts(responsePosts.data);
+      const sortedPosts = [...responsePosts.data].sort(
+        (a, b) => new Date(b.created_at) - new Date(a.created_at)
+      );
+      setPosts(sortedPosts);
     };
     const fetchInforUser = async () => {
       const responseUser = await getInforUser(user.MSV);

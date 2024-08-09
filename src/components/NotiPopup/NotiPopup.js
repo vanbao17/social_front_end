@@ -16,7 +16,7 @@ function NotiPopup({ data }) {
   const update = async () => {
     const responseUpdateIsRead = await updateIsRead(data.IDNoti);
     if (responseUpdateIsRead.status == 200) {
-      if ((data.type = "messenger")) {
+      if (data.type == "messenger") {
         window.location.href = `/messenger?mess=${data.IDPost}`;
       } else {
         window.location.href = `/post?id=${data.IDPost}`;
